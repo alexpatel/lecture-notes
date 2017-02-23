@@ -1,0 +1,963 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[margin=0.75in]{geometry}
+\allowdisplaybreaks
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{2}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{exmp}{Example}[section]
+\newtheorem{remark}{Remark}
+
+\usepackage[T1]{fontenc}
+\usepackage{ccfonts}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+\textbf{Math 155R: Combinatorics} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+Last Updated: \today
+\end{center}
+
+These are lecture notes for the Spring 2017 offering of Harvard Math 155R:
+Combinatorics. Pardon any mistakes or typos.
+
+\tableofcontents
+
+\section{Monday, January 23, 2017}
+
+\subsection{Enumerative Combinatorics}
+
+The subject matter of the course is enumerative combinatorics. In general,
+combinatorics deals with finite structures; enumerative combinatorics primarily
+deals with counting (the cardinality of a particular set).
+
+\begin{exmp}
+    Take $S = \{1, \ldots n\}$, $T = \{1, \ldots m\}$. How many maps $f: S
+    \rightarrow T$? There are $n^m$ possible maps.
+\end{exmp}
+
+\begin{exmp}
+    Take $S = \{1, \ldots n\}$. How many of the possible maps $f: S
+    \rightarrow S$ are permutations? There are $n!$.
+\end{exmp}
+
+\begin{exmp}
+    How many of the $n!$ permutations in the last example are
+    derangements (i.e. $f(i) \ne i \forall i$)? One way to solve is to
+    find the probability that any particular permutation is a
+    derangement. 
+\end{exmp}
+
+\begin{theorem}[Fermat's Little Theorem]
+    Let $n$ be an integer and $p$ be a prime. Then $n^p \equiv n \mod
+    p$ (in other words, $n^p - n$ is divisible by $p$).
+\end{theorem}
+
+\begin{proof}
+    Let $S = \{1, \ldots, p\}$ and $U = \{1, \ldots n\}$. Let $X = \{f:
+    S \rightarrow U\}$. Arrange every element of $S$ in a cycle, and
+    then compose any function from $X$ with a rotation on the cycle.
+    You then have the map $T: X \rightarrow X$, $T: f \rightarrow f
+    \circ r$. If you compose with $r$ $p$ times, then you get back to
+    where you started.
+
+    Divide $X$ into 2 subsets. Let $X_0$ be the constant functions (all
+    elements of $S$ get sent to a single element in $U$). $\#X_0 = n$.
+    Let $X_1$ be the non-constant functions. For $f \in X_1$, the maps
+    $\{f, Tf, T^2f, \ldots T^{p-1}f\}$ are all distinct. $X_1$ is a disjoint
+    union of subsets of size $p$. This means that $p$ divides $\#X_1$, but we
+    know that $\#X = n^p$, and $\#X_0 = n$, and so $\#X_1 = n^p- n$ and so $p |
+    n^p - n$.
+\end{proof}
+
+\subsection{Graphs}
+
+\begin{defn}
+    A graph $G$ is a set $V$ ("vertices") and a subset $E$ of the set of
+    two-element subsets of $V$ ("edges"). There are two extremes: say $\#V =
+    n$. Could have $E = \emptyset$ or $E$ consists of all two-element subsets
+    of $V$. 
+\end{defn}
+
+\begin{theorem}[Ramsey's Theorem]
+    Given $k > 0$, $\exists n$ such that $\forall$ graphs $G$, if $\#V = n$
+    then $G$ contains either an $L_k$ ($k$ vertices with no edges) or a $K_k$
+    ($k$ vertices with edges between all of them).
+\end{theorem}
+
+\begin{exmp}
+    Given a $2 \times n$ array and $n$ dominoes, where a domino is a $2 \times
+    1$ array. You want to cover the array with the dominoes: how many ways are
+    there of tiling a $2 \times n$ with $n$ dominoes?. 
+
+    Let $T_n$ be the number of ways to tile. Note that $T_1 = 1, T_2 = 2, T_3 =
+    3$. In the $n$ case, the uppermost left domino can either be horizontal or
+    vertical. If vertical, then $T_{n-1}$ ways. If horizontal, then $T_{n-2}$.
+    So, $T_n = T_{n-1} + T_{n-2}$.
+\end{exmp}
+
+\section{Wednesday, January 25, 2017}
+
+\subsection{Generating Functions}
+
+Last time: domino-covering problem. We found that $T_n = T_{n-1} + T_{n-2}$ for
+$n \ge 2$. Can we express $T_n$ in closed form? Yes, using the technique of a
+\textit{generating function}. Introduce $F(x) = \sum_{n=0}^\infty T_nx^n \in
+\mathbb{Z}[[x]]$. Don't think about $F(x)$ as a function, think about it as a
+power series. It will converge for some values, but not all of them - so just
+do the calculations in the ring of formal power series. 
+
+\begin{align*}
+F(x) &= \sum_{n=0}^\infty T_nx^n \\
+ &= 1 + x + \sum_{n=2}^\infty T_nx^n \\
+ &= 1 + x + \sum_{n=2}^\infty(T_{n-1} + T_{n-2})x^n \\
+ &= 1 + x + \sum_{n=2}^\infty T_{n-1}x^n + \sum_{n=2}^\infty T_{n-2}x^n\\
+ &= 1 + x + x(F(x) - 1) + x^2F(x)\\
+ &= 1 + xF(x) + x^2F(x) \\
+ (1 - x - x^2)F(x) &= 1 \\
+ F(x) &= \frac{1}{1-x-x^2}\\
+\end{align*}
+
+Next, write out the power series expansion of $F(x)$. Let $\phi = \frac{1
+    +\sqrt{5}}{2}$. Then, the roots of the denominator of $F(x)$ are $-\phi,
+    \phi - 1 = \frac{1}{\phi}$ - i.e. $(1 - x - x^2) = (1 - x/\phi)(1 + \phi
+    x)$. So, 
+
+\begin{align*}
+F(x) &= \frac{1}{1 - x - x^2}\\
+&= \frac{\lambda}{1 - x/\phi} + \frac{\mu}{1 + \phi x}\\
+1 &= \lambda(1 - \phi x ) + \mu(1 + x/\phi)\\
+\lambda &= \frac{1}{1 + \phi^2}, \mu = \frac{\phi^2}{1 + \phi^2}\\
+\frac{1}{1-x-x^2} &= \frac{1}{1 + \phi^2} \frac{1}{1 - x/\phi} +
+\frac{\phi^2}{1 + \phi^2} \frac{1}{1 + \phi x}
+\end{align*}
+
+Since $\frac{1}{1-x} = 1 + x^2 + \ldots$, we can re-write $\frac{1}{1 - \phi
+x}$ as $\sum_{n=0}^\infty\phi^n x^n$ and $\frac{1}{1 + x/\phi}$ as
+$\sum_{n=0}^\infty (-1\phi)^n x^n$. 
+
+So, then just equate the coefficients from the two ways of expressing $F(x)$:
+
+$$T_n = \frac{1}{1 + \phi^2}(-1/\phi)^n + \frac{\phi^2}{1 + \phi^2} \phi^n$$
+
+\subsection{Stirling Numbers}
+
+\begin{defn}
+A \textbf{partition} of a set $\Sigma_n = \{1, \ldots n \}$ is an expression of
+$\Sigma_n$ as a disjoint non-empty union of subsets. In other words, we have an
+equivalence relation ($a \equiv a, a \equiv b \Leftrightarrow b \equiv a, a
+\equiv b \& b \equiv c \Rightarrow a \equiv c$) on $\Sigma_n$.
+\end{defn}
+
+Question: How many partitions of $\{1, \ldots, n\}$ with $k$ parts are there?
+These are denoted $\begin{Bmatrix}n\\ k \end{Bmatrix}$ and are called
+\textbf{Stirling numbers}.
+
+\begin{itemize}
+    \item $\begin{Bmatrix} 0 \\ k \end{Bmatrix}$ is 0 if $k > 0$ or 1 if $k =
+        0$ (mostly because of convention). 
+    \item $\begin{Bmatrix} n \\ k \end{Bmatrix} = 0$ whenever $k < n$ 
+    \item $\begin{Bmatrix} n \\ 0 \end{Bmatrix} = 0$ is 1 if $n = 0$ and 0 otherwise.
+    \item $\begin{Bmatrix} n \\ 1 \end{Bmatrix} = 1$ if $n  > 0$ and 0 if $n = 0$.
+\end{itemize}
+
+Next, to find a closed-form expression of a given Stirling number for $\{1,
+\ldots, n \}$. Ask: is $\{n \}$ one of the subsets? Break the partitions in
+which $\{n\}$ is a subset and those partitions in which it is not. If "Yes",
+then just solve $\begin{Bmatrix} n - 1 \\ k - 1\end{Bmatrix}$. If "No", then
+$\begin{Bmatrix} n - 1 \\ k \end{Bmatrix} * k$.
+
+Conclusion: $\begin{Bmatrix} n \\ k \end{Bmatrix} = \begin{Bmatrix} n - 1 \\ k
+    - 1\end{Bmatrix} + \begin{Bmatrix} n - 1 \\ k \end{Bmatrix} * k$
+
+\section{Friday, January 27, 2017}
+
+\subsection{Sterling Numbers}
+
+Last time: $\begin{Bmatrix}n \\ k\end{Bmatrix}$ is the number of partitions of
+the set of $n$ elements into $k$ non-empty subsets (also the number of
+equivalence relations on the set with $n$ elements with exactly $k$ equivalence
+classes). 
+
+\begin{exmp}
+    $\begin{Bmatrix} 4 \\ 2 \end{Bmatrix} = 7$. You have $\{1, 2\} \cup \{3,
+    4\}, \{1, 3\} \cup \{2, 4\}, \{1, 4\} \cup \{1, 3\}, \{1\} \cup \{2, 3, 4\},
+    \{2\} \cup \{1, 3, 4\}, \{3\} \cup \{2, 1, 4\}, \{4\} \cup \{1, 2,3\}$.
+\end{exmp}
+
+We want to solve the recursion relation derived at the end of the last lecture
+with a generating function. Fix $k$ such that: 
+\begin{align*}
+F_k &= \sum_{n=0}^\infty \begin{Bmatrix}n \\ k \end{Bmatrix} x^n \\
+&= \sum_{n=0}^\infty \begin{Bmatrix}n-1\\k-1 \end{Bmatrix} x^n +
+\sum_{n=0}^\infty k\begin{Bmatrix}n-1 \\ k\end{Bmatrix}x^n\\
+&= xF_{k-1} + kxF_k\\
+&= \frac{x}{1 - kx}F_{k-1}\\
+F_0 &= \sum \begin{Bmatrix} n \\ 0 \end{Bmatrix} x^n = 1\\
+F_1 &= \frac{x}{1-x} = x + x^2 + x^3 + \ldots\\
+F_2 &= \frac{x^2}{(1-x)(1-2x)}\\
+\end{align*}
+
+Use partial fractions to solve $F_2$: 
+\begin{align*}
+    \frac{1}{(1-x)(1-2x)} &= \frac{A}{1-x} + \frac{B}{1-2x}\\
+    1 &= A(1-2x) + B(1-x) \\
+    2A + B &= 0, B = -2A,A + B = 1\\
+    A &= -1, B=2\\
+    F_2 &= x^2\left(\frac{-1}{1-x} + \frac{2}{1-2x} \right)\\
+    &= x^2\left(-\sum x^n + 2^{n+1}x^n\right)\\
+    \begin{Bmatrix}n \\ 2\end{Bmatrix} = -1 + 2^{n-1} = 2^{n-1} - 1
+\end{align*}
+
+Note that there are $2^n$ subsets of the set with $n$ elements, but two (the
+empty set and the whole set) are not proper non-empty subsets. So then you get
+$\frac{2^n - 2}{2} = 2^{n-1} - 1$.\\
+
+\subsection{Binomial Coefficients}
+
+\begin{defn}
+    ${n \choose k}$ is the number of $k$-element subsets of the set with $n$
+    elements. You could think of this also as the number of sequences of $k$
+    distinct elements of the set $\{1, \ldots, n\}$ divided by $k!$ (because of
+    sequence ordering).
+    $${n \choose k} = \frac{n(n-1)(n-2)\ldots(n-k+1)}{k!} = \frac{n!}{k!(n-k)!}$$
+\end{defn}
+
+
+Find the recursion relation: partition the set of subsets of the set with $n$
+elements with $k$ elements into subsets containing $n$ and subsets not
+containing $n$. A subset containing $n$ amounts to a subset of $k$ elements on
+the set with $n-1$ elements, The number of subsets not containing $n$ is ${n-1
+\choose k}$. So ${n \choose k} = {n-1 \choose k} + {n - 1 \choose k - 1}$.
+
+\begin{align*}
+    F_n &= \sum_k {n \choose k}x^k \\
+    &= \sum {n-1 \choose k} x^k + \sum {n - 1 \choose k - 1}x^k \\
+    &= F_{n-1} + xF{n-1}\\
+    F_n &= (1 + x)F_{n-1}\\
+    F_0 &= 1\\
+    F_n &= (1 + x)^n = \sum {n \choose k} x^k
+\end{align*}
+
+\begin{exmp}
+Evaluate $\sum_{k=0}^n k{n \choose k}$. One way to phrase this problem:
+how many chaired committees can be formed from $n$ people?
+\end{exmp}
+
+\begin{itemize}
+\item First choose $k$ people for committee out of $n$ people, then choose one
+    of $k$ as the chair.
+\item Choose chair first and then choose subset from remaining $n-1$. So the
+    answer is $n2^{n-1}$.
+\item Alternatively, use a generating function (then take the derivative and
+    plug in $x = 1$):
+    \begin{align*}
+        (1 +x)^n &= \sum_{k=0}^n {n \choose k}x^k\\
+        n(1 + x)^{n-1} &= \sum k {n \choose k} x^{k-1}\\
+        n * 2^{n-1} &= \sum k {n \choose k}
+    \end{align*}
+\end{itemize}
+
+\subsection{Derangements}
+
+\begin{defn}[Derangement]
+Let $S = \{1, \ldots n\}$. A permutation of $S$ is a bijection $S \rightarrow
+S$. We have $n!$ permutations. A derangement is a bijection $f$ such that $f(k)
+\ne k \forall k$. How many derangements are there? What is the
+probability that a randomly chosen permutation has a fixed point?
+\end{defn}
+
+Let $D_n$ be the number of derangements of $\{1, \ldots, n\}$ and let $X$ be
+the set of all permutations (of cardinality $n!$). We want to decompose $X$
+into subsets based on the number of fixed points per subset - so $X = \coprod
+X_k$ where $X_k$ is the set of permutations with exactly $k$ fixed points.
+
+It follows that:
+\begin{align*}
+n! &= |X| = \sum_{k=0}^n |X_k| = \sum_{k=0}^n = {n \choose k}D_{n-k}\\
+1 &= \sum_{k=0}^n \frac{D_{n-k}}{k!(n-k)!}\\
+\sum_{n=0}^\infty x^n &= \sum_{n=0}^\infty \sum_{x=0}^n \frac{D_{n-k}}{k!(n-k)!}x^n
+\end{align*}
+
+\section{Monday, January 30, 2017}
+
+There is a typo in Theorem 5 (L4p3). It should be $\sum \frac{m^n}{m!}$.
+
+\subsection{Derangements}
+
+Recall: $D_n$ is the number of derangements on the set with $n$ elements. We
+asked: what fraction of all permutations are derangements? The recursion
+relation is derived by letting $\{1, \ldots, n\} = \coprod_{k=0}^n X_k$ where
+$X_k$ is the number of permutations with exactly $k$ fixed points. First
+specify the $k$ elements that will be fixed, and then calculate the derangement
+on the remaining $n - k$ members. There are ${ n \choose k}$ such fixed point
+combinations. 
+
+\begin{align*}
+n! &= \sum_{k=0}^n {n \choose k} D_{n-k} \\
+\sum n!x^n &= \sum_{n=0}^\infty\sum_{k = 0}^n {n \choose k} D_{n-k}x^n \\
+\sum x^n &= \sum_{n=0}^\infty \sum_{k = 0}^n \frac{D_{n-k}}{k!(n-k)!}x^n \\
+&= \sum_{k,l \ge 0} \frac{1}{k!l!} D_l x^{k + l} \\
+&= \left(\sum_{k=0}^\infty \frac{x^k}{k!}\right)\left)\sum_{l=0}^\infty \frac{D_l}{l!}x^l\right) \\
+&= e^x\left(\sum_{l=0}^\infty \frac{D_l}{l!}x^l\right)
+\end{align*}
+
+We're summing all integers $n$ and then all integers $k$ in the range of 0 to
+$n$. This is the same thing as summing over all integers $k$ and all integers
+$n-k$. So set $l = n-k$ so that $n = k+l$. Also, you can write $x^{k + l}$ as
+the product of two series. The result is called the exponential generating
+function.
+
+The point of the use of generating functions is to package the sequence in a
+compact form instead of having to take the recursion relations one at a time.
+If we want to package information, we will often be able to do so in different
+ways, and the exponential generating function is often a helpful way of
+packaging. Often, the exponential generating function will be identifiable but
+not another generating function.
+
+The ratio $\frac{D_l}{ l!}$ is the probability of a permutation being a
+derangement. 
+
+\begin{defn}[Exponential generating function]
+    If $c_0, c_1, c_2, \ldots$ is any infinite sequence, then the exponential
+    generating function of the $c_i$ is $\sum_{n=0}^\infty \frac{c_n}{n!}x^n$.
+    So $\frac{1}{1-x} = e^x F \Rightarrow F = \frac{e^{-x}}{1-x}$ is the one
+    for derangements.
+\end{defn}
+
+We have that:
+\begin{align*}
+    \sum \frac{D_n}{n!} x^n &= \frac{e^{-x}}{1-x} \\
+    &= \left(\sum_{p=0}^\infty x^p\right)\left(\sum_{q=0}^\infty
+    \frac{(-1)^q}{q!}x^q\right) \\
+    \frac{D_n}{n!} &=  \sum_{p+q=n} \frac{(-1)^q}{q!} \\
+    &=  \sum_{q=0}^n \frac{(-1)^q}{q!} \\
+    &= 1 -1 + 1/2 - 1/6 + 1/24 + \ldots + (-1)^n/n! \\
+    D_n &= n! - n! + n!/2 - n!/6 + \ldots + (-1)^n
+\end{align*}
+
+$D_n/n!$ is $e^x$ cut off after $n$, and note that the error between it and
+$1/e$ is very small in large $n$. $D_n$ is the closest integer to $n!/e$. So
+the probability that a given permutation is a derangement approaches
+$\frac{n!}{e}$.
+
+\subsection{Bell Numbers}
+
+\begin{defn}[The Bell Numbers]
+Question: How many partitions are there of $\{1, \ldots, n\}$? Equivalently,
+how many equivalence relations are possible on $\{1, \ldots, n\}$? We call this
+number $b_n$.
+\end{defn}
+
+\begin{remark}
+The Bell Numbers are different than the Stirling Numbers because we are not
+considering how many subsets the partition should have. Clearly, $b_n =
+\sum_{k=0}^n \begin{Bmatrix} n \\ k \end{Bmatrix}$.
+\end{remark}
+
+Recursion relation: A partition of $\{1, \ldots, n + 1\}$ gives rise to a
+decomposition of $\{1, \ldots, n\}$ into two set: the numbers $i$ in the same
+part as $n + 1$ and then the rest. Let's say that there are $k$ elements in the
+first set and $n - k$ elements in the second part. What you get is: $b_{n+1} =
+\sum_{k=0}^n {n \choose k} b_{n-k}$.
+
+Instead of waiting for the generating function to manifest, we just choose the
+exponential generating function (so, divide by $n!$, multiply by $x^n$, then
+sum).
+
+Goal: find the exponential generating function for $F = \sum \frac{b_n}{n!}x^n$.
+
+\begin{align*}
+    \frac{b_{n+1}}{n!} &= \sum \frac{1}{k!(n-k)!} b_{n-k} \\
+    F' = \sum \frac{b_{n+1}}{n!} x^n &= \sum_n \sum_{k=0}^n  \frac{1}{k!(n-k)!} b_{n-k} \\
+    &= \sum_{k, l} \frac{1}{k!l!} b_l x^{k+1} \\
+    e^xF &= \left(\sum \frac{1}{k!}x^k\right)\left(\sum \frac{1}{e!}b_lx^l\right) \\
+    F' &= e^xF \\
+\end{align*}
+
+\subsection{Formal Power Series}
+
+We are working with the ring of formal power series. Fix a field $K$ of
+characteristic 0 $K[[x]] = \{\sum_{n=0}^\infty a_n x^n : a_n \in K\}$. These
+are not functions, infinite sums do not have to exist or converge in fields. We
+just treat this as a formal entity (like a polynomial) just longer. We can
+carry out all the operations that we usually do with power series and
+polynomials:
+\begin{enumerate}
+    \item add, multiply ($k[[x]]$ has structure of commutative ring with identity)
+    \item If $f = \sum a_nx^n $ and $a_o \ne 0$ then $f$ has a reciprocal power
+    series $g = \frac{1}{f}$. So you can divide power series under this condition.
+    \item composition: $f, g \in  K[[x]]$ and $\sum b_n x^n, b_0 = 0$ then you can compose.
+\end{enumerate}
+
+\section{Wednesday, February 1, 2017}
+
+Today: Bell Numbers and the theory of species (through category theory). There
+are notes on categories and functors up on the course web page.
+
+\subsection{Bell Numbers}
+
+\begin{defn}
+    $b_n$ is the number of partitions of the set $\{1, 2, \ldots, n \}$ into
+    non-empty subsets. This is the same as the number of possible equivalence
+    relations on the set of $\{1, \ldots, n\}$. $b_0 = 1, b_1 = 1, b_2 = 2, b_3
+    = 5$. $b_n = \sum_{k=0}^n \begin{Bmatrix} n \\ k \end{Bmatrix}$.
+\end{defn}
+
+In general, there are two extremes: every element is a different partition, or
+only one cell in partition with $n$ elements.
+
+Recursion relation: say the part containing $n + 1 $ also contains $k$ elements
+of $\{1, \ldots , n\}$. The recursion relation is $b_{n+1} = \sum_{k=0}^n {n
+\choose k} b_{n-k}$.
+\begin{align*}
+b_{n+1} &= \sum_{k=0}^n {n \choose k} b_{n-k} \\
+\frac{b_{n+1}}{n!} &= \sum_{k=0}^n \frac{1}{k!(n-k)!} b_{n-k} \\
+\frac{b_{n+1}}{n!} x^n &= \sum_{k=0}^n \frac{1}{k!(n-k)!} b_{n-k} x^n \\
+\sum \frac{b_{n+1}}{n!} x^n &= \sum_{n=0}^\infty \sum_{k=0}^n \frac{1}{k!(n-k)!} b_{n-k} x^n \\
+\sum \frac{b_{n+1}}{n!} x^n &= \sum_{k, l \ge 0}^\infty \frac{1}{k!l!} b_{n-k} x^{k+l}
+\end{align*}
+Set $F = s\sum \frac{b_n}{n!} x^n$. It does not matter whether this converges
+(it does only for some small interval about the origin). However, convergence
+is relevant because if it does not converge than it is unlikely that the power
+series will be expressible with elementary functions. The relation between the
+expression we've derived and $F$ is that our expression is $F'$. So,
+\begin{align*}
+    \sum \frac{b_{n+1}}{n!} x^n &= \sum_{k \ge 0}^\infty \frac{x^k}{k!} \sum_l
+    \frac{b_l x^l}{l!} \\
+    F' &= e^xF
+\end{align*}
+Solutions to this equation are of the form $F = ce^{e^x}$. So now if you
+compare constant terms, then you get $c = \frac{1}{e} e^{e^x} = e^{e^x - 1}$.
+Subtracting the 1 makes sense for power series because it means there is no
+constant from the differential equation.
+\begin{align*}
+    e^{e^x} &= \sum \frac{(e^x)^m}{m!} \\
+    &= \sum \frac{1}{m!} e^{xm} \\
+    &= \sum_m \sum_n \frac{1}{m!} \frac{(mx)^n}{n!} \\
+    &= \sum_{m,n} \frac{m^n}{m!n!} x^n
+\end{align*}
+Compare coefficients of $x^n$: $e\frac{b_n}{n!} = \sum_m \frac{m^n}{m!n!}$. So,
+$b_n = \frac{1}{e}\sum_m \frac{m^n}{m!n!}$.
+
+\subsection{Theory of Species}
+\begin{defn}[Species]
+    A species $S$ is a device that does 2 things:
+    \begin{itemize}
+        \item It associates to every finite set $I$ another finite set $S(I)$.
+        \item It associates to every bijection of sets $\pi: I \rightarrow J$ a
+            corresponding bijection $S(\pi): S(I) \rightarrow S(j)$. 
+    \end{itemize}
+    Subject to the following conditions:
+    \begin{itemize}
+        \item $I, J, K$ finite sets. $\pi: I \rightarrow J$, $\pi': J
+            \rightarrow K$ bijection. Then $S(I) \rightarrow_{S(\pi)} S(J)
+            \rightarrow_{S(\pi')} S(K)$ and we require that $S(\pi' \circ \pi)
+            = S(\pi') \circ S(\pi)$.
+        \item If $\pi = id_I: I \rightarrow I$ then $S(\pi) = id_{S(I)}$. This
+            follows from the first condition.
+    \end{itemize}
+    The relevant category is the category with objects being finite sets and
+    whose morphisms are bijections amongst those sets. A species is just a
+    functor from that category onto itself.
+\end{defn}
+
+\begin{exmp}[Species of partitions]
+    Let $S(I)$ be the set of partitions of $I$ and $\pi: I \rightarrow J$.
+    $S(\pi)$ maps partitions of $I$ onto partitions of $J$.  So $S(\pi) : I =
+    \coprod I_2 \rightarrow J = \coprod(\pi(I_2))$.
+\end{exmp}
+
+\begin{exmp}[Species of subsets] 
+$S(I)$ is the subsets of $I$ and the Specifies of
+$k$-element subsets $S(I)$ is subsets of $I$ with $k$-elements.
+\end{exmp}
+
+\begin{exmp}[Species of graphs]
+$S(I)$ is the set of graphs with vertex set $I$. We can
+think of the set of edges as the symmetric product of $I \times I$ minus the
+diagonal. Think about how to formulate the species of connected graphs.
+\end{exmp}
+
+\begin{exmp}[Species of undecorated sets]
+    $S(I)$ is the set of one element for all $I$. 
+\end{exmp}
+
+\begin{exmp}[Species of non-empty undecorated sets]
+    $S(I)$ is the set of one element if $I \ne \emptyset$ and $\emptyset$ if $I
+    = \emptyset$.
+\end{exmp}
+
+\section{Monday, February 6, 2017}
+
+\subsection{Theory of Species}
+
+Last time: we introduced the notion of a species, which in its simplest form is
+something that associates finite sets to finite sets and bijections between
+finite sets. If you ahve category $C$ whose objects are finite sets and whose
+morphisms are only bijections. A species $S$ is a functor from $C \rightarrow
+C$.
+
+\begin{exmp}
+    (species of partitions) $S[I]$ is the set of partitions of $I$, (species of
+    subsets) $S[I]$ is the set of subsets of $I$, (linear orderings of $I$),
+    the set of permutations of $I$, derangements, graphs with vertex set $I$,
+    connected graphs with vertex set $I$.
+\end{exmp}
+
+There were two trivial species: $S[I]$ associates to every set a set with one
+element, $S[I]$ is the set with one element if $I$ is non-empty and $\emptyset$
+otherwise. These are called the species of decorated/non-decorated sets.
+
+What are we going to do with species? Associated to a species $S$ its
+\textbf{exponential generating function}. Let $a_n = |S[\{1, \ldots, n\}]|$ and
+set $F_S = \sum_{n = 0}^\infty \frac{a_n}{n!}$. In the book this is written
+$F_S(x)$ to emphasize that it is a formal power series, but this wrongly
+suggests that this is a function.
+
+\begin{exmp}
+    If $S$ is the species of permutations, then $a_n = n!$ and the generating
+    function $F_s = \sum_{n \ge 0} \frac{n!}{n!} x^n = \frac{1}{1-x}$.
+\end{exmp}
+
+\begin{exmp}
+    Let $S[I]$ associated to every finite set $I$ a one-element set. Since
+    $|S[I] = 1 \forall I$, then $F_s = \sum \frac{x^n}{n!} = e^x$.
+\end{exmp}
+
+What we will be trying to do is establish a dictionary that will allow us to
+move between species and power series. The basic idea is that if we have one or
+more species we can combine them in certain ways that are relatively natural
+and we can ask: if I know the generating function of two speices, can I
+describe the generating function that occurs when we combine them?
+
+\begin{center}
+\begin{tabular}{ c c }
+    Operations on Species & Operations on Power Series\\ 
+    $S + T$ & $F_{S + T} = F_S + F_T$ \\ 
+    $S'$ & $F_{S'} = (F_S)'$ \\
+    $ST$ & $F_{ST} = F_SF_T$ \\
+    $S \circ T$ & $F_{S \circ T} = F_S \circ F_T$
+\end{tabular}
+\end{center}
+
+\begin{exmp}
+    Define the sum of two species $S, T$ as $(S + T)[I] = S[I] \coprod T[I]$.
+    Easy to note that the bijection is preserved and the cardinality is the sum
+    of the species. So $F_{S + T} = F_S + F_T$.
+\end{exmp}
+
+Given $S$, can define new species $S'$ by $S'[I] = S[I\cup \{*\}]$. Then
+$|S[<n>]| = |S[<n + 1>]|$.  So $b_n = a_{n + 1}$. But $F_S = \sum
+\frac{a_n}{n!}x^n$ and so $F_{S'} = \sum \frac{a_{n+1}}{n!} x^n = (F_S)'$ 
+
+\begin{defn}[Product Species]
+    Say $S$ and $T$ are each species. Define the product species $ST$ as the
+    species defined by $ST[I] = \coprod_{I = I_0 \cup I_1} S[I_0] \times
+    T[I_1]$.  This is the same thing as the set of triples $(P, x, y)$ where
+    $P$ is a partition of $I$ into two parts $I_0$ and $I_1$, $x \in S[I_0]$
+    and $y \in T[I_1]$.
+\end{defn}
+
+\begin{defn}[Power Series of Product Species]
+    Say $|S[<n>]| = a_n$ and $|T[<n>]| = b_n$ so $F_S = \sum \frac{a_n}{n!}x^n$
+    and $F_T = \sum \frac{b_n}{n!} x^n$ so $F_{ST} = \sum \frac{c_n}{n!}x^n$
+    where $c_n = |ST[<n>]|$.
+
+    A priori, $c_n = \sum_{I = I_0 \cup I_1} \frac{a_{|I_0|}b_{|I_1|}} =
+    \sum_{k=0}^n {n \choose k}a_k b_{n-k}$. So $\sum \frac{c_n}{n!} x^n =
+    \sum_{n=0}^\infty \sum_{k=0}^n \frac{1}{k!(n-k)!} a_kb_{n-k}x^n$.
+    Rearranging the summation and setting $l = n-k$, $F_{ST} = \sum_{k, l \ge
+    0} \frac{a_kb_l}{k!l!} x^{k+l} = F_SF_T$.
+\end{defn}
+
+\begin{exmp}[Species of Derangements]
+    Let $T[I]$ be the set of derangements of $I$. Our goal is to find the
+    generating function for $T$. First, define $S[I] = \{*\}$ (assigns to every
+    set a single element set, called in the notes the species of undecorated
+    sets). If I have an arbitrary permutation of a set with $n$ elements, I can
+    specify the permutation by specifying the fixed points and then the
+    derangement of the complimentary set. So you can specify the permutation as
+    the fixed points and the derangement. So to specify the permutation you
+    have to specify the fixed point set and the derangement of the complement.
+    So the product $ST$ is the species of permutations.
+
+    We know that $F_S = e^x$ and $F_{ST} = \frac{1}{1-x}$, so $F_T =
+    \frac{1}{1-x}\frac{1}{e^x} = \frac{e^{-x}}{1-x}$.
+\end{exmp}
+
+\begin{defn}[Species Composition]
+    Say $S$ and $T$ are species; assume that $T[\emptyset] = \emptyset$. Define
+    $S \circ T$ by $S\circ T[I] = \coprod_{I = I_1 \cup \ldots \cup I_K}
+    S[\{I_1, \ldots, I_K\}] \times \prod_{\alpha = 1}^k T[I_\alpha]$. Basically
+    apply $S$ to the set of equivalence classes and multiply it by $T$ when
+    applied to each individual part of the partition. In other words, $S \circ
+    T$ is the set of triplets $\{(~, x, {y_J}_{J \in I/~})\}$
+    where $~$ is an equivalence relation on $I$, $x \in S[I/~]$, and $y_J \in
+    T[J]$ where $J$ is an equivalence class.
+\end{defn}
+
+\begin{exmp}
+    Take $S[I]$ to be the set of with the single element $\{*\}$ if $I \ne
+    \emptyset$ and $\emptyset$ if $I = \emptyset$. This is the same generating
+    function $F_S = e^x - 1$ (note the lack of constant term).
+
+    If I have an arbitrary graph with $n$ vertices and I draw edges between any
+    symmetric subset of the pairs of vertices (edges), The first thing you get
+    is a breakdown of the graph into connected components. If I want to count
+    the connected graphs, relate it to generating functions of graphs that I do
+    know.
+\end{exmp}
+
+\section{Monday, February 13, 2017}
+
+\subsection{Trees}
+
+\begin{defn}[Tree]
+    A tree is a graph without cycles (or a minimal connected graph). Key fact:
+    there exists only one simple path between any two vertices, so there are
+    only $n - 1$ edges in a tree..
+\end{defn}
+
+\begin{defn}
+    If $f^n$ is constant for some $n>0$ the we say that $f$ is \textit{nilpotent}.
+\end{defn}
+
+\begin{exmp}
+    How many trees are there with a given vertex set $I$ with $n$ vertices?
+
+    The answer is $n^{n-2}$. We will use the theory of species to count the
+    things that we want to count. The cast of characters that will appear in
+    this argument are:
+    \begin{itemize}
+        \item $S_{tree}[I]$ is the set of trees with vertex set $I$.
+        \item $S_{1-tree}[I]$ is the set of trees with vertex set $I$ and a
+            distinguished vertex $i \in I$ (the root). If $I = \emptyset$ then
+            this returns the singleton set.
+        \item $S_{2-tree}[I]$ is the set of trees with vertex set $I$ and two
+            distinguished vertices (and ordered pair of vertices, both can be
+            the same).
+        \item $S_{end}[I]$ (endomorphism) is the set of all maps $f: I \rightarrow I$.
+        \item $S_{perm}$ is the set of permutations of $I$.
+        \item $S_{lin}$ is the set of linear orderings of $I$.
+        \item $S_{nil}$ is the set of nilpotent maps $I \rightarrow I$.
+        \item $I_0$ is the set of periodic elements for a map $\pi$. If $\pi$
+            is a permutation then $I_0 = I$ and if $\pi$ is nilpotent then $I_0
+            = \{i_0\}$.
+    \end{itemize}
+
+    The claim we are going to prove is that $|S_{2-tree}[<n>]| = n^n =
+    |S_{end}[<n>]|$. But note that $S_{2-tree} \ne S_{end}$.
+\end{exmp}
+
+\begin{lemma}[$S_{end} = S_{perm} * S_{nil}$]
+    We have to establish a bijection between these two species on any given
+    set. Suppose we start with an arbitrary map $\pi: I \rightarrow I$.  Say $i
+    \in I$ is periodic for $\pi$ if $\pi^n(i) = i$ for some $n > 0$. 
+
+    $\pi: I_0 \rightarrow I_0$ is a permutation of $I_0$. For any $i \in I$,
+    the sequence $i, \pi(i), \pi^2(i), \ldots$ eventually has to repeat. If it
+    repeats, then it repeats after the first occurence of a periodic element.
+
+    Define a function $r: I \rightarrow I_0$ by saying that $r(i)$ is the first
+    periodic element in the afformentioned sequence. If $i \in I_0$ then $r(i)
+    = i$. $r$ defines an equivalence relation on $I$ so that $i \equiv j
+    \Leftrightarrow r(i) = r(j)$. The equivalence classes $J$ are indexed by
+    elements in $I_0$, and an equivalence class consists of all the points $i$
+    the gravitate towards a given periodic element. $\pi$ is nilpotent on $J$
+    with attractor $r(J)$. So we're grouping the elements $I$ into subsets
+    indexed by elements in $I_0$ where the map on the equivalence classes is
+    nilpotent.
+
+    $\pi$ gives me 3 things: an equivalence relation on $I$, a permutation of
+    the set of equivalence classes, and a nilpotent map $J \rightarrow J$ on
+    each equivalence class. But this is exactly what we want to prove: an
+    endomorphism gives rise to a permutation and a nilpotent map.
+\end{lemma}
+
+\begin{lemma}[$S_{nil} = S_{1-tree}$]
+    The map $\pi: I \rightarrow i$ is nilpotent with attractor $I_0$ then we
+    describe the tree by declaring that $i$ is adjacent to $\pi(i) \forall i
+    \ne i_0$. Conversely, if you have a tree with a root $i_0$, you can define
+    a map by mapping a vertex to the next vertex in its simple path to the
+    root.
+\end{lemma}
+
+\begin{lemma}[$S_{2-tree} \equiv S_{lin} \circ S_{1-tree}$]
+    Let $(T, v, v') \in S_{2-tree}[I]$. Let $I_0 = \{v_0, \ldots, v_n\}$ and
+    Define map $r: I \rightarrow I_0$. $r(w)$ is the first point where the unique
+    simple path from $w$ to $v$ hits $I_0$.
+
+    This gives rise to an equivalence relation on $I$, for each equivalence
+    class $J$, a rooted tree with vertex set $J$, and a linear ordering of the
+    set of equivalence classes.
+\end{lemma}
+
+\begin{lemma}
+    $F_{S_{end}} = F_{S_{perm}} \circ F_{s_{nil}} - F_{S_{perm}} \circ
+    F_{S_{1-tree}} = F_{S_{lim}} \circ F_{S_{1-tree}} = F_{S_{2-trees}}$.
+\end{lemma}
+
+\section{Wednesday, February 15, 2017}
+
+\subsection{Groups}
+
+\begin{defn}[Group action]
+    Take a group $G$ and a set $X$. By a (left)-action of $G$ on $X$ we mean a
+    map $G \times X \rightarrow X$ for which $(g, x) \rightarrow g(x) = gx$
+    such that $ex =x \forall x \in X, g(hx) = (gh)x \forall g, h \in G, x \in
+    X$. $\forall g \in G$, the map $\{g\} \times X \rightarrow X$ is a
+    bijection, so we have a map $G \rightarrow Perm(X)$. The two conditions
+    listed above amount to saying that this map is a group homomorphism.
+\end{defn}
+
+\begin{defn}[$G$-set]
+    A $G$-set is a set $X$ with an action of $G$.
+\end{defn}
+
+\begin{defn}[$G$-set isomorphism]
+    An isomorphism of $G$-sets $X, X'$ is a bijection $\phi: X \rightarrow X'$
+    such that $\phi(gx) = g(\phi x)$.
+\end{defn}
+
+\begin{defn}[Orbit]
+    Say $X$ is a $G$-set. For $x \in X$, the orbit $Gx$ of $x$ under $G$ is the
+    image of $G \times \{x\} \rightarrow X$. The orbits form a partition of
+    $X$, so $X$ is a disjoint union of orbits: $\forall x, y$ either $Gx = Gy$
+    or $Gx \cap Gy = \emptyset$. Being in some orbit is an equivalence
+    relation. We define $G \setminus X$ to be the set of orbits.
+
+    The proto-question of this unit is going to be to describe the cardinality
+    of $G \setminus X$.
+\end{defn}
+
+\begin{defn}[Fixed point set]
+    $X$ is a $G$-set. $\forall g \in G$, define $X^g = \{x \in X : gx = x\}
+    \subset X$ is the fixed point set.
+\end{defn}
+
+\begin{defn}[Stabilizer]
+    $\forall x \in X$, define $\mathrm{stab}(x) = \{g \in G : gx = x\} \subset
+    G$ is a subgroup.
+\end{defn}
+
+\begin{defn}[Transitive $G$-set]
+    $X$ is a transitive $G$-set if it has a unique orbit.
+\end{defn}
+
+\begin{exmp}
+    Say $H \subset G$ is any subgroup. $X = G \setminus H$ is the set of left
+    cosets $gH$ which isn't a group unless $H$ is normal. $G$ acts on $X$ in an
+    obvious way: $g'(gH) = (g'g)H$. Observe that this is transitive: to get
+    from $gH$ to $g'H$ then multiply on the left by $g'g^{-1}$, so you can get
+    from any coset to any other coset.
+\end{exmp}
+
+\begin{prop}
+    Every transitive action of $G$ is of the form $G \setminus H$ for some $H$.
+    i.e. if $X$ is any $G$-set, we have an isomorphism $X\equiv \coprod G
+    \setminus H_i$ for some collection $\{H_i\}$ of subgroups of $G$.
+\end{prop}
+
+\begin{proof}
+    The identity coset of $G \setminus H$ is $H$ and the stabilizer of $id(G
+    \setminus H)$ is the subgroup $H$ itself. Check that we have an isomorphism
+    $x \cong G \setminus H$.
+\end{proof}
+
+\begin{exmp}
+    Fix $t > 0$. How many ways are there of coloring the faces of a tetrahedron
+    with $t$ colors. $X$ is the set of 4 faces of the tetrahedron, and $G = A_4$ is
+    the set of 12 rotational symmetries of the tetrahedron. The action of $G$
+    on $X$ is of the form $\coprod G \setminus H_i$.
+\end{exmp}
+
+\begin{exmp}[Burnside formula]
+    Let $X$ be a $G$-set. Then $|G \setminus X| = \frac{1}{|G|} \sum_{g \in G}
+    |X^g|$. So the trivial action is $G \times X \rightarrow X$ defined by $(g,
+    x) \rightarrow x$, and the formula reads $|G \setminus X| = |X|$ and $|X^g|
+    = |X|$ so the formula becomes trivial.
+\end{exmp}
+
+\begin{defn}[Free action]
+    An action of $G$ on $X$ is free if the action carries no element to itself:
+    $\forall g \ne e, X^g = \emptyset$. In other words, $gx = x \Rightarrow g =
+    e$ for any $x$. What are the orbits? The map $G \times \{x\} \rightarrow X$
+    is an inclusion (the size of the orbit $Gx$ has size $|G|$). And $|G
+    \setminus X| = |X|/|G|$.
+\end{defn}
+
+\section{Friday, February 17, 2017}
+
+Chapter 2 of Artin's Algebra book is on the course website in the files
+section.
+
+\subsection{Groups}
+
+It is useful to think of groups as symmetries of an object. A square has four
+90-degree symmetries, a non-square rectangle has two 180-degree symmetries. But
+it's not jsut the number of symmetries that concerns us - it's not just the
+cardinality of the number of symmetries, but the fact that the symmetries
+satisfies the group axioms. For many applications, you need to know the group
+structure in addition to the cardinality of things.
+
+\begin{exmp}
+    $G$ is a group acting on a set $X$. If $H \subset G$ is a subgroup, then we
+    can form the set of cosets of $H$ $gH \forall g \in G$. $G$ acts on $X$ by
+    $g': gH \rightarrow g'gH$.
+\end{exmp}
+
+\begin{prop}
+    Every transitive $G$-set is of the form $G/H$. Any $G$-set is of the form
+    $\coprod G/H$. 
+\end{prop}
+
+\begin{remark}[Burnside formula]
+    $X$ is a $G$-set, then $|G/X| = \frac{1}{|G|} \sum_{g \in G} |X^g|$ where
+    $X^g = \{ x \in X: gx = x\}$.
+\end{remark}
+
+\begin{proof}
+    We can assume $X = G/H$ and then we have to show in this case that $|G| =
+    \sum_{g \in G} |X^g|$. So $X^g = \{g'H \in G/H : gg'H = g'H \} = \{g'H :
+        g'^{-1}gg' \in H \} = \{g'H : g^{'-1}gg' \in H\}$.
+
+    In particular, $|X^g|$ is going to be the number of cosets such that
+    $g^{'-1}gg' \in H\}$. Every coset of $H$ has the same cardinality, so
+    instead of counting cosets we can count elements of $G$ and then divide by
+    teh cardinality of $H$. So, $|X^g| = |\{g' \in G : g^{'-1}gg' \in H\}| /
+    |H|$. The key step is sum the previous expression over all $g \in G$. Note
+    that $|g'Hg^{'-1}| = |H|$.
+    \begin{align*}
+        \sum_{g \in G} |X^g| &= \frac{1}{|H|} |\{(g, g') \in G \times G : g^{'-1}gg' \in H\}|\\
+        &= \frac{1}{|H|} |\{(g, g') : g \in g'Hg^{'-1}\}| \\
+        &= \frac{|G|}{|H|}|H|= |G| 
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    How many ways are there to color the faces of a tetrahedron if $t$ colors
+    are available (we don't have to use them all) up to rotational symmetry?
+
+    Let $F$ be the set of faces ($|F| = 4$). We want to consider $X$, the
+    colourings of $F$ with colors in $T$ where $|T| = T$ so that $X = T^F$
+    where $T^F$ is the set of maps from faces to colors. The question we ask
+    is: if $G$ is the group of rotational symmetries of the tetrahedron, then
+    $G$ acts on $F$ by definition and so $G$ acts on the set of maps $T^F: F
+    \rightarrow T$. So the question is how many orbits of there on the latter
+    map: what is the cardinality of $G/T^F$.
+
+    Claim: there are three types of symmetries. The identity, for which the
+    orbits are just the faces and so there are 4; rotation by 120 degrees about
+    the center of a face, there are 8 elements like this and each one has two
+    orbits; finally, midpoints of the edges with rotations of 180-degrees, of
+    which there are three.
+
+    In current situation, $|G| = 12$. For a given $g$, what is $|X^g|$? If $g =
+    e$, then every coloring is fixed and so we have a choice of any one of $t$
+    colors and so $|X^e| = t^4$. If $g$ is a 120-degree rotation, then $|X^g| =
+    t^2$. If $g$ is a 180-degree rotation, then $|X^g| = t^2$.
+
+    Conclusion: $|G \ T^F| = \frac{1}{12} (t^4 + 8t^2 + 3t^2) = \frac{1}{12}
+    (t^4 + 11t^2)$. Check that this is always an integer.
+\end{exmp}
+
+In general, if $G$ acts on a set $X$, for $g \in G$ we can consider the number
+of $g$-orbits = $o(g)$. The Burnside formula implies that $|G \ T^X| =
+\frac{1}{|G|} \sum_{g \in G} t^{o(g)}$.
+
+\section{Wednesday, February 22, 2017}
+
+How many graphs are there with vertex set $\{1, \ldots, n\}$? How many graphs
+with $n$ vertices are there, up to isomorphism (modulo some kind of symmetry)?
+For the first question, we look at all possible sets of edges. An edge is a
+two-element subset, so there are $2^{n \choose 2}$. For the second question,
+the answer is much less clear. Basic tool: Burnside formula: for a finite group
+$G$ which acts on a set $X$, then the number of orbits in $X$ $|G/X| =
+\frac{1}{|G|} \sum_{g \in G} |X^g|$.
+
+\begin{exmp}[Polya's Enumeration Theorem]
+    How many ways are there to color $X$ with a finite set $T$ of $t$ colors?
+    This is to say, how many maps $T^X$ (up to symmetries of $G$)?
+
+    For a given $g \in G$, let $o(g)$ be the number of $g$-orbits in $X$. For a
+    coloring to be preserved under $g$, you have to choose a color for each
+    orbit of $g$ on $X$. Burnside says: $|G/T^X| = \frac{1}{|G|} \sum_{g \in G}
+    t^{o(g)}$. This is Polya's enumeration theorem.
+\end{exmp}
+
+\begin{exmp}[Number of unlabelled graphs on $n$ vertices]
+    Polya's theorem as expressed seems specific to coloring, but it's not. It
+    can be used for the unlabelled graph problem. Let $<n> = \{1, \ldots, n\}$
+    and associate to this set $E = E_n$ which is the set of unordered pairs of
+    distinct elements of $<n>$ (or, equivalently, subsets of $<n>$ with
+    cardinality 2.) So $|E| = {n \choose 2}$. A graph on $<n>$ is an arbitrary
+    subset of $E$, so the set of graphs with vertex set $<n>$ is exactly the
+    set of all subsets of $E$.  Since $\Sigma_n$ acts on $<n>$ it also acts on
+    $E$ and so it acts on the set of subsets of $E$ (graphs on $<n>$).
+
+    How do we set this up as a coloring problem? To specify a subset of a given
+    set, you can think of it as a coloring of the set by two colors (in and
+    out).  Color it 0 if its in the subset and 1 if its not. So the subsets of
+    $|E|$ are going to be exactly the colorings of $E$ with two elements. 
+    
+    We're trying to find $|\Sigma_n / \{0, 1\}^E| = \frac{1}{n!} \sum_{g \in
+    \Sigma_n} 2^{o(g)}$ where $o(g)$ is the number of orbits of $g$ acting on
+    $E$.
+\end{exmp}
+
+\begin{exmp}[How many graphs on $4$ vertices?]
+    In all these situations, you just have to consider the conjugacy classes of
+    the symmetric group. There are 5 types (conj. classes) of permutations
+    $\sigma \in \Sigma_4$. $|E| = {4 \choose 2} = 6$.
+    \begin{enumerate}
+        \item $e$ - there's 1, there are 6 orbits each with 1 element.
+        \item $(ab)$ - there are 6, 4 orbits (2 fixed points, 2 orbits of size 2).
+        \item $(abc)$ - there are 8, 2 orbits (each of size 3).
+        \item $(abcd)$ - there are 6, 2 orbits (sizes 2 and 4).
+        \item $(ab)(cd)$ - there are 3, 4 orbits (2 fixed opints, 2 orbits of size 2).
+    \end{enumerate}
+    So the answer is $\frac{1}{24} (2^6 + 6(2^4) + 8(2^2) + 6(2^2) + 3(2^4)) =
+    11$.
+
+    Let's organized them by number of edges: there's 1 graph with no edges,
+    there's 1 graph with 1 edge, etc. You'll notice there's a symmetry between
+    a graph and the complementary graph by taking the edges on vertices that
+    aren't connected in the first graph. 
+
+    We haven't talked about the number of conjugacy classes of $\Sigma_n$, but
+    that grows fairly fast. There isn't a closed-form formula for this.
+\end{exmp}
+
+The next question is: how many graphs are there with $n$ vertices and $k$
+edges? We'll call this number $c_k$.
+
+Let $F(t) = \sum_{k = 0}^{n \choose 2} c_kt^k$. We know that $F(1) = \sum c_k =
+\frac{1}{n!} \sum_{\sigma \in \Sigma_n} 2^{o(\sigma)}$. Let $E$ be the set of
+unordered pairs of elements of $<n>$. Let $X_k$ be the set of graphs with
+vertex set $<n>$ with $k$ edges which is the same thing as the set of subsets
+of $E$ having cardinality $k$. So $|X_k| = {{n \choose 2} \choose k}$.
+
+By Burnside formula, $c_k = |\Sigma_n \ X_k| = \frac{1}{n!} \sum_{\sigma \in
+\Sigma_n} |X^\sigma_k|$. For each $\sigma \in \Sigma_n$, look at action of
+$\sigma$ on $E$. Say this has orbits $E_1, E_@, \ldots, E_{o(\sigma)}$. We want
+a collection of orbits whose sizes add up to $k$. $|X_k^\sigma|$ is the set of
+subsets of $E$ of size $k$ consisting of a union of orbits. How many of these
+are there? One way to keep track is to consider the following polynomial: $ (1
++ t^{|E_1|})(1 + t^{E_2|})\ldots(1 + t^{|E_{o(\sigma)}|})$. What is the
+coefficient of $t^k$ in this product? This corresponds exactly to collections
+of orbits whose total cardinality adds up to $k$.
+
+\end{document}
