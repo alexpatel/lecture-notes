@@ -1,0 +1,412 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage[margin=0.75in]{geometry}
+\allowdisplaybreaks
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage[T1]{fontenc}
+\usepackage{ccfonts}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+\textbf{24.711: Topics in Philosophical Logic} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+Last Updated: \today
+\end{center}
+
+\tableofcontents
+
+\section{Wednesday, February 15, 2017}
+
+\subsection{Zeno's Paradox of the Arrow}
+
+\begin{itemize}
+    \itemsep0em 
+    \item  An object is at rest during an interval iff it occupies only a
+        single position during that interval (not during a moment of time).
+        It's stationary during an instant only if the instant is contained in
+        an interval during which it's at rest. 
+    \item Ancient Greeks could only answer the question qualitatively because
+        they couldn't measure time (although they could measure distances). Use
+        a compass to make circles and form multiples of a unit length on a
+        line.
+    \item Can use a straight edge and compass to get an estimate of length to
+        any precision up to a rational number, but no further.
+    \item Aristotelian physics gives no good way of measuring a length of time.
+        Earth, air, wind, fire all have natural motion (up, down), but because
+        of acceleration you can't figure out good lengths of time - you need
+        something that moves at a uniform speed. The natural motion of things
+        in the heavens is circular, so you can use star movement to measure
+        lengths of time (not as simple as one would think because Aristotle's
+        system was geo-centric where the planets orbited in a circle about the
+        earth).
+    \item
+        Need to be able to measure time and distance in order to measure speed
+        and so to get close to a solution for the core question of what it
+        means to be stationary.
+    \item
+        Galileo look at pendulum movement - he saw a smooth continuous movement
+        that happens at intervals (PE being converted into KE). The
+        Aristotelian saw chaotic movement in the pendulum (you are displacing
+        the bob and it's swinging is it trying to go downward but being
+        contained by the string). Aristotle didn't have the principle of
+        balancing of forces on the bob. Aristotle's answer to the question of
+        why the bob doesn't stop is that there is some nonsense with a vacuum
+        of air being generated behind the bob and pushing it forward. We can
+        measure time by dividing the length of the pendulum rod and noting the
+        period is inversely related to the square of the length of the rod.
+    \item
+        Speed during an interval is the quotient of change of distance over
+        change and time. Zeno gave us the idea of 0 speed over an interval, now
+        we have a quantitative idea of non-zero speed during an interval. But
+        we still have to account for the idea that the ball is at rest only at
+        its apogee but at no other point in its path.
+    \item 
+        We can solve the ball problem by solving $x'(t) = 0$, where $x'$ is the
+        limit of the difference quotient of $(x(t + h) - x(t))/h$. Aristotle
+        thought that bodies were the only things that were real and that bodies
+        aren't made up of points or surfaces. So we can't just think of the
+        ball but also need to consider the position in spacetime of the ball -
+        we need to think of the trajectory (potential positions occupied by the
+        ball) as existent, even when the ball isn't there. But Aristotle argued
+        that a line isn't made up of points so this doesn't play out well under
+        Aristotelian physics - i.e. we can talk about velocities but not of
+        instantaneous velocities.
+    \item 
+        Why does Aristotle preclude the solution of taking the derivative? Do
+        we not just take the limit over smaller and smaller intervals about the
+        instant? The Aristotelian post-Newton understood the limit as the
+        continual dividing of the line into smaller pieces.
+    \item
+        Things change when we switch to dynamics - throw a ball up at some
+        initial speed and the downward force of gravity will decelerate the
+        ball until it reaches 0. But since acceleration is $dv/dt$ there's no
+        good way to define instantaneous acceleration out of velocity, which is
+        also a function.
+    \item
+        You know there are times when the ball is going up and times when the
+        ball is going down. We want to say there is a time when the ball
+        reaches its highest point when its velocity was 0, how do we know there
+        was such a time? We could solve this with the IVT but we want to do
+        this constructively by constructing the cut between positive velocities
+        and negative velocities. Can we get the LUB principle from numbers just
+        from the movement of the ball? If the LUB principle didn't hold for the
+        numbers then there would points in the ball's flight where it didn't
+        have any associated number for its height.
+    \item 
+        Most of what we can use real numbers for (measurements of things) we
+        can get away with just rational numbers. Dedekind had originally the
+        bad idea that we could get away with just rational numbers, but that
+        was thrown out with $\sqrt{2}$ and the Ancients. Also need cube roots
+        to deal with the roots of cubic polynomials. So the real numbers fall
+        out of solving polynomials with rational coefficients - but this
+        doesn't solve the ball problem because you have no reason to believe
+        that the place where the ball is stationary is the root of an equation.
+    \item 
+        The Ancients don't allow for the idea that there is a point on a line
+        that is defined by the all the points to the right of it or to the left
+        of it. For the ball, there needs to be a top point to define the switch
+        of signs.
+    \item
+        Is it true that there is a supremum of all the points achieved by the
+        ball? Is the ball at rest at this point? What if the ball only achieves
+        heights of rational numbers (so it skips between points) or if the ball
+        has a hole at the maximum of its height curve?
+    \item
+        From Mathematica, you have a tire on a hubcap that each go through the
+        same number of rotations - how does the hubcap not move much less
+        distance than the tire? Galileo: the tire is just a polygon, the hubcap
+        goes through places where there is no corner of the polygon
+        instantaneously which is just a wacky idea.
+    \item 
+        Conclusion: you can't explain what is going on if you just think in
+        terms of bodies and don't think about space and lines as being made up
+        of points.
+    \item
+        An alternative view says that only bodies are real, and the bodies can
+        be in different places but the places aren't real, just the bodies are
+        (and the distance relations they have with each other). Kant disputed
+        this view - if God made a single marble hand before anything else, then
+        He could've made either a right hand or a left hand (it has to be one
+        or the other), but if all we have is bodies with spatial relations then
+        there is nothing different between a right hand and a left hand; but
+        there is a difference between right hand and left hhand so there has to
+        be something to account for the difference - you need position.
+\end{itemize}
+
+\section{Tuesday, February 21, 2017}
+
+\subsection{Dedekind's Construction of $\mathbb{R}$}
+
+\begin{itemize}
+    \itemsep0em 
+    \item  
+        Jill starts at the bottom of a hill when Jack starts and the top and
+        the reach the top/bottom at the same time. Is there a point where they
+        are at the same elevation? Yes - take the set of all times when the
+        difference in height was positive and then take the least upper bound.
+        Most people say that it comes from their motion being continuous.
+    \item
+        Really early on people learned how to use numbers to measure things -
+        at least from having to re-establish property lines after the flooding
+        of the Nile. This entailed measurement by yardstick which always yield
+        results in fractional form. But can we get these same numerical
+        properties without actually deferring to the use of numbers? 
+    \item
+        The rationals as fractions seem very well understood - the gaps between
+        them were less well understood. We know that all the rationals along
+        the path will be reached by the ball - how can we justify whether there
+        are non-rational points that are hit by the ball.
+    \item
+        Pythagoreans found that simple ratios of where you put your finger on
+        the lyre string correspond to harmonic sounds, but then one of them
+        discovered that there are length sthat aren't rationals. He
+        didn't find it out by measurement but rather by reductio ad absurdum -
+        finding the length of the diagonal of the square with side length 1. He
+        showed that it can't be rational (and was thrown overboard for his
+        discovery). So you have to have square roots if you want to do geometry
+        like the Greeks (because of conic sections).
+    \item
+        There's a problem which is for any square find another square that has
+        twice the area - it was known by Plato and was in the Meno - solve it
+        by taking the diagonal of the first as the side length of the second.
+        Can you do this with a cube? You can't do this with a compass and
+        straight edge. The medeival Arabics pushed forward by going passed
+        compass/straightedge and finding teh roots of a cubic equation without
+        requiring that the length we're talking about can be one you can
+        actually create with a compass and straightedge. That produced a whole
+        new family of lengths never talked about by the Greeks. It was widely
+        believed that you could create new numbers by constructing equations
+        with irrational roots with only rational coefficients. For example $x^3
+        = 2$ you would introduce $\sqrt[3]{2}$. It was widely thought that all
+        the real numbers were got by solving such equations, but for example
+        $\pi$ isn't.
+    \item
+        Cantor showed that there are many more real numbers that aren't
+        solutions to equations than ones there are. The question at the end of
+        the 19th century was how to get a picture of what the real line was
+        like - how to fill in all the holes. Dedekind's answer was to introduce
+        the cuts. To fill in all the gaps, we need a cut everywhere. He gave a
+        criteria for what it would mean for $\mathbb{R}$ to be complete, and
+        second to show that there really was such a thing as that complete
+        system of real numbers. The algebraic properties of the real numbers
+        are relatively easy to satisfy, and you need added properties in order
+        to fill in all the gaps. The principle Dedekind proposed was the
+        least-upper bound principle. He also wanted to convince people that
+        this was final - that you couldn't go any further.
+    \item
+        Dedekind started by seeing if a geometric approach would suffice - he
+        thought this was obvious - why? You also need a lot of (controversial)
+        set theory to get Dedekind cuts, but the Dedekind cuts do reduce the
+        reals to the rationals to the integers. Around this time, everyone
+        considered the laws of geometry to be synthetic a priori (Kant), where
+        we could only make sense of our sensory experience if we organized them
+        into three-dimensional space. It seems dubious that the way we organize
+        space should be the foundation of analysis because we have tons of
+        applications of the real numbers that have nothing to do with space.
+        Also, there's non-Euclidean geometry.
+    \item
+        Dedekind started by enumerating the rules needed for $\mathbb{R}$:
+        field axioms, ordering, etc. But that doesn't distinguish from the
+        rationals. You need something more: the completeness principle (LUB).
+        Dedekind gives some axioms that the thought could answer the question
+        of what the real numbers are, or at least he says the real numbers
+        satisfy those structural features. Why is identifying the structural
+        features enough to say that you've identified the real numbers? There
+        are going to be lots of other algebraic systems that satisfy those
+        axioms. You have to also give the intended model for those axioms. The
+        physical line satisfies those axioms, but we have no reason to believe
+        that any particular one is not the real number system. Also any
+        complete model of those axioms is going to be isomorphic to any other.
+        Why is giving the structure not enough?
+    \item
+        At the same time, Frege was investigating the foundations of
+        arithmetic. He thought that the only principle he needed was Hume's
+        Principle (two collections have the same elements iff there's a
+        one-to-one correspondence between the elements). He showed you could
+        get PA axioms from Hume's Principle, but he still asked: how do I know
+        whether Julius Ceasar is a number? We expect a numeral to pick out a
+        definite thing, but we can never do this with only axioms. Dedekind
+        introduced the idea that the numerals don't have to stand for definite
+        objects - that mathematics is rather about identifying structural
+        properties, and that identifying the structure is all you can and need
+        to do. 
+\end{itemize}
+
+\section{Wednesday, February 22, 2017}
+
+\subsection{Dedekind's Construction of $\mathbb{R}$}
+
+\begin{itemize}
+    \item
+        Dedekind asked: what further properties than the normal ordering and
+        field properties are necessary to specify the real numbers?
+        Completeness. His proposal is to create cuts of the rationals into two
+        non-empty classes so that everything in the lower portion is less than
+        everything in the upper portion. Completeness means that anytime you
+        have such a cut there is a real number defining it. This principle
+        amounts to the least-upper bound principle. He showed that this
+        condition characterizes the real number system (up to isomorphism).
+        Historically, people had made systems that purported to be the real
+        numbers but it turned out that they left some numbers out. But Dedekind
+        showed that you can't add anything to his system and get anything
+        that's properly larger. 
+    \item
+        The isomorphism theorem says that if you have any two models of his
+        axioms $a$ and $b$, you first define the positive integers of $a$ to be
+        those that contain $0 \in a$ and are closed under succession (and
+        define the positive integers of $b$ the same way), and then define a
+        map between the two sets of natural numbers. This map is injective - if
+        it weren't, then the set of integers that had mappings would have a LUB
+        $b'$, and somewhere between $b'$ and $b' - 1$ you would have an integer
+        that gets mapped. This lets you map the rationals of $a$ to the
+        rationals of $b$, and so then we get an isomorphism of Dedekind cuts
+        and so of the real numbers in $a$ and $b$. 
+    \item
+        So we've completely characterized the structure we're looking for - how
+        do we know that there is something that exhibits that structure?
+        Dedekind's response is to define the set of all cuts to be the real
+        numbers and then show that this structure satisfies the axioms. So he
+        takes the construction to be a sufficient answer to the question of
+        what the real numbers are. But it feels like he's just given us
+        something that is isomorphic to the real numbers. 
+    \item
+        Frege equivalently gives structural axioms for the natural numbers, but
+        wasn't satisfied because he couldn't answer the question of whether
+        Julius Caesar was a natural number. Hume's Principle is a structural
+        property that only characterizes the natural numbers up to isomorphism.
+    \item
+        All we need to construct the natural numbers is an infinite set from
+        which we can generate a simply infinite set, but that's non-trivial
+        because, starting from Zeno's Paradox, there is a long line of people
+        saying that we can't have an infinite set, just a potentially infinite
+        set. They say that all we can do is give methods for taking a finite
+        sequence and extending it, but the idea that we can treat an infinite
+        set as a whole was long treated as contradictory. Dedekind thinks he
+        can build an infinite set by taking the totality of objects of his
+        thought and take a member of that totality S and form the thought "S is
+        an object of one's thought", and then recursively do that. That's a
+        one-to-one function from the objects of one's thought to the objects of
+        one's though, but it isn't onto because one's ego isn't of the form "X
+        is the object of my thought". This skirts the question of potentially
+        vs. actually infinite because the totality of objects of thought is
+        something given to you, not something constructed.
+    \item 
+        He says that the natural numbers are a "free created of the human mind"
+        which he clarifies as being because they are a result of the process of
+        abstraction specified above. This isn't completely new - Cantor does
+        something similar when he wants to go beyond the natural numbers into
+        the transfinite by looking at the different ways of ordering the
+        collection and then defining an order isomorphism and then defining the
+        order types as got from the orderings by the process of abstraction.
+        You regard two orderings the same if their orderings are isomorphic
+        (there's a bijection from one to the other that preserves the order).
+        Or you can go even more abstract and say that two totalities are the
+        same if there is a bijection between them, irrespective of ordering.
+        That gives you the cardinal numbers. Aristotle also gets the objects of
+        geometry similarly - he thought of them as ordinary solid bodies but we
+        abstract away all the non-geometrical properties. Both Cantor and
+        Dedekind were dipping into that tradition.
+    \item
+        In retrospect, it seems like this is a big transition from thinking of
+        mathematical terms like "natural/real/complex number" as denoting
+        definite things (not things known from sense-experience, but still
+        definite entities) to thinking about them as if we can talk about them
+        as definite things once we've characterized them up to isomorphism.
+        Modern mathematicians are pretty much invariably subscribers to the
+        latter view - you talk about mathematical objects, but mathematical
+        objects are what they are because of their properties and properties
+        only characterize up to isomorphism. There was a change in the way
+        mathematicians talked about mathematical objects that philosophy was
+        really slow to notice.
+    \item
+        Cantor also had a way of creating the real numbers out of the
+        rationals. Cantor himself was interested in Fourier Series and when
+        they converge, for him the idea that the real numbers were complete was
+        cashed out by the idea that series converge whenever it's possible for
+        them to converge. For any convergent sequence, we have $\forall k,
+        \exists N$ such that $n > N \Rightarrow |a_n - a_N| < \frac{1}{k}$
+        (Cauchy sequence). So one criterion for the completeness of the real
+        numbers other than the LUB principle is the Cauchy criterion implies
+        convergence for any sequence. You can derive one criterion from the
+        other. Cantor then defined the equivalence relation between $\{x_n\}$
+        and $\{y_n\}$ as for any $k$ there is a sequence term such that $y_n$
+        and $x_n$ are arbitrarily close passed the sequence term. You can show
+        that Dedekind's and Cantor's principles yield isomorphic copies of the
+        real numbers. But the question never arose as to which of these is the
+        genuine construction of the real numbers. It didn't occur to them to
+        ask: what's a real number - a Dedekind cut or an equivalence class of
+        Cauchy sequences?
+    \item
+        Hilbert's axiomitization of geometry: he gave the set of axioms and
+        wasn't initially concerned with the question of whether the system was
+        complete. We know we get a model of the geometry axioms if you take a
+        point to be an ordered triple of real numbers (identify a point with
+        its coordinate in $\mathbb{R}^3$, which doesn't have anything to do
+        with space and yet is still a perfectly good model). You also get a
+        perfectly good model if you identify a point with an ordered triple of
+        algebraic numbers - so the geometric axioms do not require
+        completeness. Later on, Hilbert started to worry about completeness and
+        so he added an axiom in the 9th edition so that the new axiom system is
+        complete. One of the axioms of the original system was the Archimedean
+        axiom: you can construct a line segment out of a sub-segment so that
+        there is some multiple of the sub-segment that will surpass the end of
+        the larger segment. Traditionally, geometric axioms were supposed to
+        represent three-dimensional space, but Hilbert rather didn't deny that
+        the axioms describe physical space but didn't assume that they were
+        about physical space. He said the axioms were about systems that
+        satisfy those axioms, and nothing more - there's nothing more to being
+        an intended model for the geometric axioms. This is similar to group
+        theory - there's no intended model for group theory other than a system
+        that satisfies those axioms. This is a real departure from the idea
+        that mathematics has a definite subject matter.
+    \item
+        You can have a name without a referent - for example, "Cerberus" or
+        other names that occur within myths. You don't have that with names
+        like "Cherry" - there's a definite referent to the name "Cherry". But
+        we have these numerals in mathematics (e.g. $\sqrt{2}$) that don't have
+        a uniquely determined thing that they refer to. The issue with idea of
+        identifying the square root of 2 with the set of all things that when
+        squared is 2 is problematic because you can't square a set. And you
+        can't identify it with any one object whose square is two for similar
+        reasons. There's a worry that Dedekind gave us a construction of what
+        he called the real numbers and long before him the Egyptians were using
+        numerals that purported to be real numbers, so did the Ancient
+        Egyptians refer to a Dedekind cut when they wrote down one such
+        numeral? Or, possibly, could the real number signs not refer to
+        entities but instead to some action, like the act of taking the
+        successor with the natural numbers? Well, the numerals do correspond in
+        an objective way similarly to how people's names objectively refer to
+        people. If it were purely made up, then there wouldn't be a "correct"
+        answer for question with real-numbered answers.
+    \item
+        Dedekind described what he was doing as the reduction of analysis to
+        arithmetic, which was understood to have secure foundations. But
+        analysis has less secure foundations because people didn't have a clear
+        understanding of continuity and limits and what was required for a
+        sequence to converge - there was just a general lack of clarity. It's
+        more accurate to say that he reduced analysis to set theory or set
+        theory plus arithmetic because what he needs to form the cuts is a lot
+        of set theory. Looking back, it seems that he really did do something
+        important for our understanding of the foundations of analysis, but it
+        was not reducing analysis to arithmetic but rather constructing
+        analysis within this theory of sets. Next time let's look at the
+        axiomatic theory of sets and consider Dedekind's construction as a
+        construction of the real numbers within set theory.
+
+\end{itemize}
+
+
+\end{document}
