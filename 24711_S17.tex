@@ -408,5 +408,165 @@ Last Updated: \today
 
 \end{itemize}
 
+\section{Wednesday, March 1, 2017}
+
+\subsection{Paradoxes}
+
+\begin{itemize}
+    \itemsep0em 
+    \item
+        Last time we talked about Zermelo's axiom of set theory. One thing
+        Zermelo wasn't addressing but were in the background were the
+        paradoxes, which is why people responded to his proof of the
+        well-ordering theorem with such uncertainty (their understanding of how
+        sets work was shaken by the appearance of paradoxes). Formal set theory
+        was still pretty new and their study only came to the foreground with
+        Dedekind and Cantor and it seemed to fall immediately into
+        contradiction.
+    \item
+        The most prominent of paradoxes was Russell's paradox - some sets are
+        elements of themselves, so consider the set of sets that are not
+        members of themselves. If you ask the question of whether that set is a
+        member of itself, you get a contradiction. The paradox has a direct
+        analogue about language - "dog" isn't a dog so it doesn't apply to
+        itself, but the phrase "does not apply to itself" applies to itself iff
+        it doesn't.
+    \item
+        Another paradox was with Cantor's study of ordinal numbers, he found
+        that the ordinals were well ordered and for any well ordered set there
+        is an ordinal that describes the order type of that set. Any ordinal is
+        the order type of the ordinals less than it. But consider the
+        collection of all ordinals, which is well ordered, and so there is a
+        map from all the ordinals to all the ordinals less than some ordinal.
+        Keep applying the map and then you get an infinite descending sequence
+        which is a contradiction because the ordinals are supposedly well
+        ordered. The semantic analogue is to take all the names of ordinals,
+        there are only countably many names and so there are only countable
+        many names of ordinals, but since there are uncountably many ordinals
+        there are ordinals that aren't named. Since the ordinals are
+        well-ordered there is some least ordinal is not named, but we have just
+        specified a name for it. Also there is a least natural number nameable
+        in fewer than 19 syllables. 
+    \item
+        Cantor showed that there are uncountably many real numbers by assuming
+        that there are only countably many real numbers and then disproving the
+        bijection by constructing a new real number not in the enumerated set.
+        You can make a bijection $\mathbb{R} \rightarrow \{q_1, q_2, q_3,
+        \ldots \in \mathbb{Q}\}$. He generalized the result to show that for
+        any set there are more subsets of $S$ than the number of elements of
+        $S$. But then take the set of all sets, the cardinal number of the
+        power set of the set is larger than the cardinal number of the set
+        itself. But the power set of all sets of sets is included in the set of
+        all sets and so the cardinal number of the power set is less than or
+        equal to the cardinal number of the set of all sets. There is no direct
+        linguistic analogue but it came from the generalization of Cantor's
+        real number uncountability proof. If we look at that theorem
+        linguistically, we see that there are only countably many names for the
+        uncountable $\mathbb{R}$, and then put the names in a list an use
+        Cantor's procedure to construct a real number that is nameable but not
+        on the list of all possible names.
+    \item
+        Cantor just rejected that there was such thing as the set of all sets.
+        He thought there were theological implications. He wrote to the Pope
+        (no response) and said that he was developing a theory of the actual
+        infinite but there may be worries because the church teaches that only
+        God is infinite. He says it isn't blasphemous because he says he has
+        found an intermediate level between the finite and the absolutely
+        infinite (transfinite) where the transfinite goes beyond what we
+        ordinarely think of the finite, but it's not copmlete limitless. If you
+        had something completely limitless then you can't number it or
+        comprehend it mathematically - only God is at the level of the
+        absolutely infinite which is above not just the finite but also the
+        transfinite. So Cantor's work isn't bringing God down to the level of
+        ordinary mathematicians, but rather he boosted God up to a level
+        farther beyond the level of things that Earthly things are. 
+    \item
+        So there's these analogues between set theoretic paradoxes and semantic
+        paradoxes. Zermelo didn't seem interested in the semantic part. Russell
+        had the exact opposite attitude - he thought this showed a deep
+        discontinuity in human's thought, one that was so profound because it
+        manifested in a lot of different ways. How important is it to get a
+        unified solution to the set of two paradoxes? It really seems like they
+        are the same phenomenon. 
+    \item
+        This week we're going to look at a pardox that wasn't among the list of
+        Russell's paradoxes - developed around 1960. You can't recursively pick
+        sets as elements of other sets - there's no infinite descending chain.
+        Say a set is well-founded if there aren't any infinite descending
+        chains beginning with. Let $W$ be the set of all well-founded sets. If
+        there were an infinite descending chain ending with $W$ then look at
+        the chain the ends at the element which is an element of $W$ and so
+        that chain is infinite and the element is not well-founded. So $W$ has
+        to be well-founded. But then $W \in W$ and so there's an infinite chain
+        ending at $W$ by picking $W$ for every link of the chain. Since no
+        well-founded set is a member of itself, this paradox seems to reduce
+        straight to Russell's Paradox. But it doesn't because you could have $A
+        \in B \in A \in B \in \dots$. So no loops of any length around whereas
+        Russell's paradox is just a loop of length one. This paradox turned
+        people's attention to sets that are well-founded - but most sets that
+        are useful for math are those that are well-founded. If you want to
+        really think closely about set theory but your interest in set theory
+        is just for finding a theory of sets that is useful for mathematics,
+        then you can just stick with the well-founded sets.
+    \item
+        So there was an axiom proposed that said that all sets are
+        well-founded. What amounts to the same thing is: for any non-empty set
+        $S$, there is an element $s \in S$ such that $\forall t \in s, t \notin
+        S$. Originally it was just adopted for convenience but it does yield a
+        really pretty picture for what the universe of sets looks like. If we
+        assume that the things that aren't sets form a set, then you get this
+        picture of the theory of types. The crucial axiom for building out this
+        structure is the axiom of ordered pairs - this allows you to put
+        together two elements from different levels. This is the way that
+        Zermelo was thinking about it but not the way that Russell and
+        Whitehead were thinking about it. Cantor's paradox entails forming a
+        set at some particular level, but the set of all sets must be at a
+        level before which the set of all sets is formed and so there is no
+        level where the set of all sets is at. Since a set is always formed at
+        a level after the level at which its elements are formed, so you solve
+        the same set of paradoxes. For the ordinals, each level of the
+        hierarchy introduces a new ordinal. Each level of the hierarchy
+        introduces exactly one new ordinal. So in order to get the collection
+        of all the ordinals it would have to be formed at a stage after which
+        you'd already gotten all the ordinals and so there is no collection of
+        all the ordinals. So there's a response to all the set-theoretic
+        paradoxes that comes just from trying to form a set that violates the
+        foundation axiom. 
+    \item
+        So adding another axiom gave us the stronger system because it removes
+        an inconsistency but does not introduce one. If you restrict the axioms
+        of set theory to range only over well-founded sets. You can verify that
+        each formula you get from an axiom of set theory by restricting the
+        quantifier is a theorem of set theory. If you could derive a
+        contradiction from the axioms of set theory including the axiom of
+        foundation then you could get a contradiction in ZFC.
+    \item
+        The tradition, beginning with Cantor, is thinking about collections
+        formed from contained elements and you need collections to be
+        well-founded and so you get paradoxes if you don't restrict to
+        well-founded collections. The opposite view is from Frege where you get
+        sets by starting with concepts. Von Neumann thought that you get
+        contradictions when you start forming sets that are really large ($>>>
+        \mathbb{R}$) like the set of all the ordinals or the set of all the
+        cardinals, etc. So forming sets that are way too big is impossible but
+        formulating sets that are relatively small is okay. The range of a
+        function on a set will be at most the same size as the domain set so
+        then if the things in the domain aren't too many to form a set then the
+        things in the range aren't too many to form a set, either. VN had the
+        replacement principle and this more global principle that you can form
+        sets unless they are too big, "too big" meaning things form a set
+        unless those things are equinumerous with the entire universe. So if
+        you have set that's soo big that if it's a set then the entire universe
+        is a set then that set is not actually a set. So there's a different
+        way of thinking about where the paradoxes come from by having sets that
+        are just too big. Axel took this idea and build a whole set theory out
+        of it. 
+    \item
+        This is the combinatorial conception of sets as collections. Next time
+        we will think about sets from a logical point of view by starting with
+        concepts and then get to sets by a process of abstraction.
+
+\end{itemize}
 
 \end{document}
+
