@@ -410,7 +410,7 @@ Last Updated: \today
 
 \section{Wednesday, March 1, 2017}
 
-\subsection{Paradoxes}
+\subsection{Combinatorial Conception of Sets}
 
 \begin{itemize}
     \itemsep0em 
@@ -565,7 +565,141 @@ Last Updated: \today
         This is the combinatorial conception of sets as collections. Next time
         we will think about sets from a logical point of view by starting with
         concepts and then get to sets by a process of abstraction.
+\end{itemize}
 
+\section{Monday, March 6, 2017}
+
+\subsection{Logical Conception of Sets}
+
+\begin{itemize}
+    \itemsep0em 
+    \item
+        We've been talking about set theory, of which there are two
+        conceptions. The combinatorial approach says that sets are collections
+        built up from individual. The other idea is the logical conception of
+        sets, where you gets sets by starting with concepts and forming sets by
+        abstraction. This conception starts with Frege. Frege started out by
+        looking at complex names like "the capital of France" and saw that the
+        name was formed by "France" and the function sign "the capital of \_".
+        "France" names something, but "the capital of" only becomes complete by
+        begin supplanted by a name. Concepts are unsaturated and are not
+        individuals because it needs another object to be completed. 
+    \item
+        We know what an incomplete building - there are still bricks and
+        mortar, but just not enough to yield a whole. But what is it for a
+        concept to be essentially incomplete? At the syntax level, you put a
+        name into a concept-phrase; at the semantic level, you put an object
+        into a concept to get a truth value. Someone might (incorrectly) think
+        that Versailles was the capital of France and say "We're going to Paris
+        and then going to the capital of France". But you can't substitute
+        "Paris" for the latter reference because the person believes that the
+        referrent of "the capital of France" is Versailles. Senses deal with
+        things like this (i.e. belief contexts). Thinking about sentences as
+        having the True/the False as their referrents turned out to be very
+        fruitful because he could think as predicates as functions. This
+        allowed standard operations with functions from basic algebra to be
+        applied to concepts.
+    \item
+        Frege has individuals, functions, function signs with more than one
+        argument, and second-level functions. Second-level functions: "someone
+        is a wise philosopher" has a similar grammatical structure as "Socrates
+        is a wise philosopher", so it looks like you have "\_ is a wise
+        philosopher" as a concept which can take "Socrates" and "someone" as
+        arguments. But in the latter case the individual about which you're
+        talking is only indefinitely specified. Frege saw that this wouldn't
+        work because of things like "Someone is wise" and "Someone is a
+        philosopher" does not yield "Someone is a wise philosopher" and so the
+        logical structure of the two is really quite different. Frege's idea is
+        that "someone" is not a name, but rather a function sign that takes as
+        its argument a concept. So "someone" is the property that a property
+        has if there is at least one person who falls under ther latter. So
+        things like quantifiers or the definite integral sign are second-order.
+    \item
+        Frege wanted to use this logical framework to establish arithmetic on a
+        purely logical foundation. The prevailing view was that the laws of
+        arithmetic were synthetic a priori, where you become acquainted by
+        arithmetic by experiencing the act of succession. He wanted to reject
+        that view and show that the arithmetic truths are analytic. The
+        principle he uses to establish this is called Hume's Principle, which
+        says that two concepts have the same number just in case there is a
+        one-to-one correspondence between the things that fall under them. He
+        wanted to avoid postulating the existence of the numbers, but he has to
+        go deeper than Hume's Principle in order to avoid this. He wants to be
+        able to think of the laws of number as purely logical laws.
+    \item
+        Something deeper going on was the theory of classes. The motivating
+        idea is that if you say Traveler falls into the class of horses, you
+        aren't saying anything more or less than just that Traveler is a
+        horse. So he wanted to do something like identify 5 with the class of
+        all 5-element sets. But he was able to define the numbers so as to
+        avoid the circularity.
+    \item
+        He had a theory of arithmetic based on counting as derivative from
+        Hume's Principle, and then he set out on similar project with the real
+        numbers. But then he got a letter from Russell, who pointed out
+        Russell's Paradox that comes out of the set of sets that aren't members
+        of themselves. Frege (basically) gave up the project, but Russell took
+        it over. Frege had gotten to this point by saying that for any concept
+        there is a corresponding extension. The idea that you could match
+        concepts and objects in a one-to-one fashion is exactly what Cantor
+        showed you couldn't do with the real numbers. This is a very general
+        argument that there are more concepts than extensions. Russel saw that
+        and thought that the way to get around this is not to treat numbers as
+        objects but rather as second-level concepts. So there is a concept that
+        is true of all concepts under which exactly 5 things fall. The former
+        concept is what Russell is going to treat as the number 5. Frege got
+        into all this trouble by postulating classes, Russell tried to get away
+        without classes. Russell wanted to postulate concepts, and he thought
+        that you could guarantee the existence of concepts corresponding to the
+        predicates of the language on purely logical grounds. Because from
+        "Traveler is a horse" we can infer "$\exists x$ $x$ is a horse" we can
+        also get "$\exists F$ Traveler is $F$". He thought that would give you
+        on purely logical grounds the existence of concepts.
+    \item
+        But you can still formulate Russell's Paradox by thinking about the
+        concept of not falling under itself. Russell wanted to use concepts in
+        all the places where Frege used classes, and even though you can still
+        get arithmetic from both you can also still formulate the paradox in
+        both. He wanted some principle to ensure that the expressions of the
+        language are meaningful because he knew that you could take expressions
+        that seemed reasonably and get contradictory results. He appealed to
+        Poincare's Vicious Circle Principle, because then you can exclude
+        notions like a concept applying to itself. Russell's idea was that you
+        need to follow Poincare in order to avoid the paradoxes. He added to
+        Frege's levels of concepts (the \textbf{type} of the concept, or the
+        number of arguments) the \textbf{order} of the concept which pertains
+        to which types of concepts are necessarily for formulating that
+        concept. Later, he would replace concepts with propositional functions,
+        which are functions that take an object as an argument and gives a
+        proposition as its result.
+    \item
+        The Vicious Circle Principle gets in Russell's way. First, we want to
+        be able to state the LUB principle of the real numbers. In terms of the
+        vicious circle principle, you have this collection $S$ that is bounded
+        above, so you have a collection of upper bounds of $S$ and the least
+        member of that collection is the LUB of $S$, which violates the vicious
+        circle principle. There's another example of violating the VCP with
+        trying to define the natural numbers. To get $\mathbb{N}$, he needs to
+        postulate the existence of an infinite set of individuals. Zermelo's
+        theory was neutral in that it allowed individuals but didn't require
+        individuals. Russell had to require the existence of infinitely many
+        individuals, which already was a problem because General Relatively
+        says that the universe is finite and QM says that at the level of the
+        very small we can get indivisible pieces, so it was actually a question
+        of whether there are infinite individuals (at least, the postulate is
+        contingent and dubious). If you suppose there is a simply infinite set,
+        then you show this by showing a one-to-one function whose range is a
+        proper set of the domain and then generating a simply infinite set by
+        taking something that is in the range but not in the domain and then
+        following that cycle. Russell tried to use the axiom of infinity to get
+        0 and the successor operation from this simply infinite set. The
+        natural numbers can't just be a set with 0 and everything accessible
+        with successor -- you need to be talking about the \textit{smallest}
+        collection that containes 0 and closed under successor or else you
+        don't get induction. But what is meant by "smallest"? The intersection
+        of all collections with 0 and closed under successor. But then you are
+        defining the natural numbers as the intersection of all collections
+        that contain the natural numbers and your definition is circular. 
 \end{itemize}
 
 \end{document}
