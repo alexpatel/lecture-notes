@@ -702,5 +702,166 @@ Last Updated: \today
         that contain the natural numbers and your definition is circular. 
 \end{itemize}
 
+\section{Wednesday, March 8, 2017}
+
+\subsection{Iterating on the Theory of Types}
+
+\begin{itemize}
+    \itemsep0em 
+    \item 
+        Last time, we ended with a discussion on how Russell's theory of types
+        is inadequate for doing basic mathematics (you can't get the real or
+        rational numbers).The problem was that the viciuos circle principle was
+        too restrictive and issues arose with only being able to define
+        propositional functions on lower-order/type functions. As a patch,
+        Whitehead and Russell proposed that for any propositional function
+        there is a coextensive propositional function with the same type and
+        lowest possible order (without talking about anything that isn't in the
+        extension of the propositional function). This gave them the
+        mathematics they wanted but completely gave up the possibility of
+        mathematics being pure logic. As long as all the propositions you
+        needed could come just from existential instantiation, then it seems
+        that you could just use pure logic. But existential instantiation does
+        not get you lower-order correlates of the propositional function.
+        Assuming the axiom of reduciability, they really gave up the idea of
+        reducing mathematics to logic (and admitted as much).
+    \item
+       It's pretty similar with the axiom of choice, that if you have a set of
+       non-empty overlapping set there's another set that picks one element
+       from each of them. To Vann, it seems very obvious if you're thinking
+       about classes as collections (you can always form the product space and
+       find a projection). If you're thinking not in terms of classes but in
+       terms of propositional functions and classes as things that we construct
+       by constructing predicates, then there's not really intuitive grounds
+       for axiom of choice. If you have infinitely pairs of socks, then there's
+       no reason you should be able to form a predicate of only one from each
+       pair (??). If you think of sets as being created by some form of mental
+       process, then the axiom of choice seems dubious.
+    \item
+        The Banach-Tarski paradox says that you can cut up a sphere of diameter
+        1 into pieces and re-assemble the pieces into two spheres of length 1.
+        You need the axiom of choice in order to create the cut. Some people
+        thin kit's a problem and other's don't. Why it seems like a problem is
+        that you get 8x as much matter for free (it seems). Others say that it
+        just seems like a problem because we expect volumes to be preserved,
+        but if you think of how volume is defined (you get volume of a sphere
+        by inscribing polyhedra inside and outside the square and taking the
+        limit of many faces), but you can never really close the gap between
+        the inside/outside and the sphere. 
+    \item
+        Russell had two motives for adopting the vicious circle principle: he
+        wanted to respond to the set-theoretic paradoxes and he watned to
+        respond to the semantic paradoxes. In the introduction to
+        \textit{Principia Mathematica} there is some talk about the semantic
+        paradoxes. Ramsey proposed that we distinguish between the semantic
+        (epistemic) paradoxes from the set-theoretic paradoxes. For the
+        purposes of creating a foundation of mathematics you just focus on the
+        set-theoretic paradoxes. Then you realize that you don't need the
+        vicious circle principle to solve the set-theoretic paradoxes when you
+        have the axiom of reducibility. Ramsey suggested that you scrap order
+        altogether and just arrange the propositional functions so that a
+        function just has to be a higher type than its arguments. Quine took
+        that a step further: Frege wanted to talk about classes, Russell wanted
+        to replace that with talk of propositional functions. Quine noticed
+        that the talk of propositional functions was intended for the logical
+        reduction project, but since that failed we might as well go back to
+        talking about classes. So we had individuals, classes of individuals,
+        relations (binary/ternary/so on) between individuals, binary relations
+        relating classes to classes, individuals to classes, etc. So you end up
+        with this structure that is still kid of complicated but still much
+        simpler than Russell's solution.
+    \item
+        Norbert Weiner saw that even that picture could be simplified by
+        instead of talking about relations, let's identify a relation with a
+        class of ordered pairs/triples/etc. (identify $<a, b, c>$ with $<a, <b,
+        c>>$. So you can just talk about individuals, classes of individuals,
+        classes of classes of individuals, etc. Weiner's idea was that you
+        didn't have to treat ordered pairs as primitive. The law of ordered
+        pairs says that $<a, b> = <c, d>$ iff $a = c$ and $b = d$. Norbert
+        noticed that you could take $\{\{\{a\}, \emptyset\} , \{\{b\}\}\}$, and
+        you can verify that this satisfies the law of rodered pairs. There are
+        more brackets than you'd think because he was working in the theory of
+        types and need to be working with things of the same type. With this
+        simplication, what started as a monstrously complicated system becomes
+        very simple.
+    \item
+        To get mathematics, he needed infinitely many individuals. If you have
+        only finitely many individuals, no matter how high up the hierarchy he
+        went you'd still only have finitely many things. But if the individuals
+        about which you're talking are physical objects than it is actually
+        pretty dubious that are infinitely many. So they added the Axiom of
+        Infinity and they didn't regard it as obviously true.
+    \item
+        There's still one feature of that project that is still kind of
+        anomalous. You want to say that there are 8 people in the room, and how
+        we're going to make sense of that is by saying that the number 8 is the
+        collection of all 8-element classes of individuals. So a number is a
+        class of classes of individuals such that every class of individuals
+        that can be put in one-to-one correspondence with a member of the class
+        is a member of the class. What is still peculiar about this theory of
+        types is that you can't mix types which means you can't use the same
+        numbers to count individuals as to count classes of individuals. So
+        there's a different number system of each type and there are infinitely
+        many systems of natural numbers. It's not fatal, but it's just a little
+        fussy and seems kind of artificial. 
+    \item
+        G\"odel stepped in a suggested that there is no good reason not to make
+        the classes cumulative instead of only allowing members of type $n - 1$
+        in classes of type $n$. Originally, we wanted this hierarchy of classes
+        in order to protect us from the paradoxes and the vicious circle
+        principle, but we've given up the vicious circle principle. He noticed
+        that we get the paradoxes when we ask whether a member of the class is
+        at the same type as the class, and so we can lighten the restriction to
+        allowing any type below the class, not just the one type just below it.
+        Originally, we get the type hierarchy from a grammatical restriction on
+        concepts/objects, but once you allow cumulative classes you need to
+        abandon the grammatical distinction - so you say that you won't make
+        type distinctions among the things we're talking about as far as logic
+        is concerned.  Some of the things we will talk about are individuals,
+        sets of individuals, and so forth, but we're going to be able to talk
+        about those all at once without distinguishing between them (there's
+        only one kind of variable for the logic). What gets us the hierarchical
+        structure is not a grammatical restrictuion but rather an axiom that
+        tells us that the sets are well-founded. so in G\"odel's system you
+        have a very simple logic (first-order predicate calculus) but you have
+        a lot of not simple axioms guaranteeing the existence of sets. 
+    \item
+        So it looks as if there is no hope for reducing mathematics to logic,
+        it looks like Cantor and Dedekind won. The advantages of a logical
+        conception of set over a combinatorial conception of set disappear once
+        this project doesn't work. And ZF set theory is so much more powerful
+        because it can extend into the transfinite. But this is also possibly
+        bad because it can make it more vulnerable to contradiction. Still
+        there are lot more points that have gone to the combinatorial
+        conception rather than the logical conception. There is still a lot to
+        be desired and it's a big loss to have mathematics be synthetic a
+        priori rather than analytic. 
+    \item
+        G\"odel's incompleteness theorem throws a wrench in the works by
+        showing that there are arithmetic truths that we can recognize as true
+        that aren't derivable from the axioms, and that even if you add more
+        axioms there are still more truths that aren't provable.
+    \item
+        More recently, the Neologicist program has been trying not to get us
+        all of ZFC but rather to get us mathematics strong enough in order to
+        serve or purposes will staying in an (arguably) logical framework.
+    \item
+        Dedekind proved that arithmetic is categorical, but if you think of
+        arithmetic as a first-order theory the way we do know, then that is not
+        categorical (it is not a second-order theory). You get induction from a
+        quantification over properties and you get categoricity from induction.
+        But when you do things in a first-order framework you have an axiom
+        schema for induction and so you have infinitely many induction axioms
+        instead of a single second-order axiom. But then this new set of axioms
+        isn't categorical and by G\"odel's work isn't complete. 
+    \item
+        The next part of our story is going to be a revival of second-order
+        logic as something we can do in teh context of modern mathematics when
+        we're well beyond the \textit{Principia} stage. That revival is due to
+        George Boolos. Next time, we'll talk about Boolos and Quine and then
+        we'll start talking about Benacerraf. Read Quine and Boolos articles.
+
+\end{itemize}
+
 \end{document}
 
