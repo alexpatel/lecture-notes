@@ -35,7 +35,7 @@ Combinatorics. Pardon any mistakes or typos.
 
 \tableofcontents
 
-\section{Monday, January 23, 2017}
+\section{January 23, 2017}
 
 \subsection{Enumerative Combinatorics}
 
@@ -108,7 +108,7 @@ deals with counting (the cardinality of a particular set).
     So, $T_n = T_{n-1} + T_{n-2}$.
 \end{exmp}
 
-\section{Wednesday, January 25, 2017}
+\section{January 25, 2017}
 
 \subsection{Generating Functions}
 
@@ -182,7 +182,7 @@ $\begin{Bmatrix} n - 1 \\ k \end{Bmatrix} * k$.
 Conclusion: $\begin{Bmatrix} n \\ k \end{Bmatrix} = \begin{Bmatrix} n - 1 \\ k
     - 1\end{Bmatrix} + \begin{Bmatrix} n - 1 \\ k \end{Bmatrix} * k$
 
-\section{Friday, January 27, 2017}
+\section{January 27, 2017}
 
 \subsection{Sterling Numbers}
 
@@ -291,7 +291,7 @@ n! &= |X| = \sum_{k=0}^n |X_k| = \sum_{k=0}^n = {n \choose k}D_{n-k}\\
 \sum_{n=0}^\infty x^n &= \sum_{n=0}^\infty \sum_{x=0}^n \frac{D_{n-k}}{k!(n-k)!}x^n
 \end{align*}
 
-\section{Monday, January 30, 2017}
+\section{January 30, 2017}
 
 There is a typo in Theorem 5 (L4p3). It should be $\sum \frac{m^n}{m!}$.
 
@@ -402,7 +402,7 @@ polynomials:
     \item composition: $f, g \in  K[[x]]$ and $\sum b_n x^n, b_0 = 0$ then you can compose.
 \end{enumerate}
 
-\section{Wednesday, February 1, 2017}
+\section{February 1, 2017}
 
 Today: Bell Numbers and the theory of species (through category theory). There
 are notes on categories and functors up on the course web page.
@@ -500,7 +500,7 @@ diagonal. Think about how to formulate the species of connected graphs.
     = \emptyset$.
 \end{exmp}
 
-\section{Monday, February 6, 2017}
+\section{February 6, 2017}
 
 \subsection{Theory of Species}
 
@@ -621,7 +621,7 @@ $|S[<n>]| = |S[<n + 1>]|$.  So $b_n = a_{n + 1}$. But $F_S = \sum
     know.
 \end{exmp}
 
-\section{Monday, February 13, 2017}
+\section{February 13, 2017}
 
 \subsection{Trees}
 
@@ -710,7 +710,7 @@ $|S[<n>]| = |S[<n + 1>]|$.  So $b_n = a_{n + 1}$. But $F_S = \sum
     F_{S_{1-tree}} = F_{S_{lim}} \circ F_{S_{1-tree}} = F_{S_{2-trees}}$.
 \end{lemma}
 
-\section{Wednesday, February 15, 2017}
+\section{February 15, 2017}
 
 \subsection{Groups}
 
@@ -799,7 +799,7 @@ $|S[<n>]| = |S[<n + 1>]|$.  So $b_n = a_{n + 1}$. But $F_S = \sum
     \setminus X| = |X|/|G|$.
 \end{defn}
 
-\section{Friday, February 17, 2017}
+\section{February 17, 2017}
 
 Chapter 2 of Artin's Algebra book is on the course website in the files
 section.
@@ -878,7 +878,9 @@ In general, if $G$ acts on a set $X$, for $g \in G$ we can consider the number
 of $g$-orbits = $o(g)$. The Burnside formula implies that $|G \ T^X| =
 \frac{1}{|G|} \sum_{g \in G} t^{o(g)}$.
 
-\section{Wednesday, February 22, 2017}
+\section{February 22, 2017}
+
+\subsection{Unlabelled Graphs}
 
 How many graphs are there with vertex set $\{1, \ldots, n\}$? How many graphs
 with $n$ vertices are there, up to isomorphism (modulo some kind of symmetry)?
@@ -959,5 +961,165 @@ are there? One way to keep track is to consider the following polynomial: $ (1
 + t^{|E_1|})(1 + t^{E_2|})\ldots(1 + t^{|E_{o(\sigma)}|})$. What is the
 coefficient of $t^k$ in this product? This corresponds exactly to collections
 of orbits whose total cardinality adds up to $k$.
+
+\section{February 22, 2017}
+
+\subsection{Wreath Products}
+
+Basic construction: say for composite $n$ that $n = kl$ . Take set $S = <n>$
+ and express $S = S_1 \coprod S_2 \ldots \coprod S_k$ where $|S_i| = l$.
+Consuder the group $K$ of permutations of $S$ that preserve this decomposition
+into subsets. We choose an equivalence relation with $k$ equivalence classes,
+each of cardinality $l$. We want to consider the group of permutations that
+preserve the equivalence relation. 
+
+So we have a map $K \rightarrow \Sigma_k$. The kernel of this map comprises
+permutations that contain any of the $S_i$ to itself. So $\cong (\Sigma_l)^k$;
+in particular, $|K| = k!(l!)^k$. As a set: $K \cong \Sigma_k \times
+(\Sigma_l^k)$ (not as a group). $K$ is called the wreath product of $\Sigma_l$
+and $\Sigma_k$.
+
+Now say $G \subset \Sigma_k$. Equivalently say $X, Y$ are sets of size $k, l$
+and $G$ acts on $X$ and $H$ acts on $Y$.
+
+Now we consider permutations of $X \times Y \rightarrow X$.
+
+\section{March 20, 2017}
+
+\subsection{Inclusion/Exclusion Principle}
+
+This week: inclusion/exclusion principle and partially ordered sets. In the
+notes, this starts with lecture 18. We're now three lectures behind the notes.
+
+Three questions:
+\begin{enumerate}
+    \item
+        How many derangements of $< n >$ are there?
+    \item
+        How many integers between $1$ and $n$ inclusive are relatively prime to
+        $n$?
+    \item
+        How many surjective maps $f: <m> \rightarrow <n>$ are there?
+\end{enumerate}
+
+In each, if you don't specify a condition then the answer is pretty immediate
+(e.g. remove "relatively prime" or "surjective"). Then we just exclude the
+non-surjective or non-relatively prime elements.
+
+\subsection{Cardinality of set unions}
+
+Starting point: if $X, Y$ are any sets, what is the $|X \cup Y|$? If they are
+disjoint, then $|X \cup Y| = |X| + |Y|$; otherwise, it is strictly less than
+this sum, so $|X \cup Y| = |X| + |Y| - |X \cap Y|$. If $X, Y, Z$ any sets, then
+$|X \cup Y \cup Z| = |X| + |Y| + |Z| - |X \cap Y| - |X \cap Z| - |Y \cap Z| +
+|X \cap Y \cap Z|$. You have to add in the last term because you are removing
+elements in all three sets three times and adding them three times without it.
+General formula: if $X_1, \ldots, X_n$ are any sets, what is $|\cup X_i|$? Let
+$X_J = \cap_{i \in J} X_i$. For $x \in X$, let $I_x = \{i : x \in X_i$. Note
+    that the empty set is included in the second formulation (using the
+    complement equivalence). 
+
+\begin{align*}
+|\cup X_i| &= \sum_{J \subset \{1, \ldots, n\}, J \ne \emptyset} (-1)^{|J| + 1} |X_j| \\
+&= \sum_{J \subset \{1, \ldots n\}} (-1)^{|J|} |X_J| \\
+&= \sum_J \sum_{x \in X} (-1)^{|J|} \text{ if $x \in X_J$ and 0 otherwise} \\
+&= \sum_{x \in X} \left( \sum_{J \subset \{1, \ldots, n\}}  (-1)^{|J|} \text{ if $x \in X_J$ and 0 otherwise} \right) \\
+&= \sum_{x \in X} \left(\sum_{J \subset I_x} (-1)^{|J|} \right) \\
+&= |\{x \in X: I_x = \emptyset\}| = |X - \cup X_i|
+\end{align*}
+
+For a two element set, two subsets have odd elements and two have even
+cardinality. So the expression sums to 0 except with the emptyset. For
+$\emptyset$, then $(-1)^{|J|} = 1$, and so $|\cup X_i| = 1$.
+
+\subsection{Derangements}
+
+Let $X = \mathrm{Perm}(<n>)$ and $X_i = \{ \sigma \in I: \sigma(i) = i\}$.
+Then, $\mathrm{Derangements}(<n>) = X - \cup X_i$. If $|J| = k$, then $|X_J| =
+(n - k)!$.  The conclusion is that the number of derangments is $|X - \cup
+X_i|$:
+
+\begin{align*}
+    |X - \cup X_i| &= \sum_{J \subset \{1, \ldots, n\}} X_J \\
+    & X_J \{ \sigma \in X: \sigma(i) = i \forall I \subset J\} \\
+    &= \mathrm{Perm}(<n> - J) \\
+    & |X_J| = \sum_{k = 0}^n \sum_{|J| = k} (-1)^k (n - k)!  \\
+    &= \sum_{k = 0}^n (-1)^k {n \choose k}(n - k)! \\
+    &= \sum_{k \ge 0} (-1)^k \frac{n!}{k!} \\
+    &= n! \sum (-1)^k / k!  \\
+    &= n!(1 - \frac{1}{1!} + \frac{1}{2!} \ldots) \\
+    &\sim \frac{n!}{e}
+\end{align*}
+
+\subsection{Surjective maps}
+
+How many surjective maps $f: <m> \rightarrow <n>$. Let $X$ be the set of all
+maps so that $|X| = n^m$. The way to test whether a map is surjective is to see
+if there is an element in the target set not in the image of the function.  Let
+$X_i = \{f : i \in Im(f)\}$ for $i = 1, \ldots, n$. So $|X_i| = (n - 1)^m$
+because you're just excluding $i$ from the target set and then collecting all
+other maps.  So $|X_J| = (n - |J|)^m$. 
+
+So the number of surjective maps is:
+\begin{align*}
+    |X - \cup X_i| &= \sum_{J \in <n>} (-1)^{|J|} (n - |J|)^m \\
+    &= \sum_{k = 0}^n (-1)^k { n \choose k } (n - k)^m
+\end{align*}
+
+\subsection{Euler $\phi$-function}
+
+The question is how many integers between 1 and $n$ are relatively primte to
+$n$? The answer is denoted as $\phi(n)$ and is classically denoted as the Euler
+$\phi$-function.
+
+Let $X = \{1, \ldots, n\}$. Let $S$ be the set of primes $p$ such that $p | n$.
+$\forall p \in S$, let $x_p \{i \in X : p | i\}$. Let $J = \{,p_1, p_2, \ldots
+p_k\} \subset S$. So, 
+\begin{align*}
+    |X_J| &= \{i \in X : p_1p_2\ldots p_k | x\} \\
+    |X_J| &= \frac{n}{p_1p_2\ldots p_k} \\
+    \frac{\phi(n)}{n} &= \sum_{J \subset S} (-1)^{|J|} \frac{1}{p_1p_2\ldots p_k} \\
+    &= \sum_{J \subset S} \prod_{p \in J} \frac{-1}{p} \\
+    &=  \sum_{J \subset S} \prod_{p \in S} \left(\frac{-1}{p} \text{ if $p \in J$ and 1 if $p \notin J$} \right) \\
+    &= \prod_{p \in S}\left(1 - \frac{1}{p}\right) \\
+\end{align*}
+
+So if $n = p_1^{a_1}p_2^{a_2}\ldots$ written in prime factor form, then
+$\phi(n) = (p_1 - 1)p_1^{a_1 - 1}(p_2 - 1)p_2^{a_2 - 1} \ldots$. 
+
+\subsection{Partially Ordered Sets}
+
+\begin{defn}
+    A partially ordered set is a set $A$ with a binary relation $\le$ with the following properties:
+    \begin{itemize}
+        \item Reflexivity: $a \le a \forall a \in A$
+        \item
+            Transitivity: $a \le b \centerdot b \le c \Rightarrow a \le c
+            \forall a, b, c, \in A$
+        \item Anti-symmetry: $a \le b$ and $b \le a$ then $b = a$.
+    \end{itemize}
+    You can think of a partially ordered set as a subset of $A \times A$ that
+    contains the diagonal and is anti-symmetric (harder to express transitivity). 
+\end{defn}
+
+We're going to hold off on assuming that $A$ is finite at this point. But we
+are still going to think of $A$ as basically a finite set, but we are now in
+Axiom of Choice territory so watch out. Joe has told us that when you counter a
+new notion you ought to look at the extreme cases. So how big can this subset
+of $A \times A$ be? 
+
+\begin{exmp}
+    Let $A = P(S)$ where $A$ is the powerset of $S$. We can say that $T \le U
+    \Leftrightarrow T \subset U$. Another case is where $A = \mathbb{Z}$ and $x
+    \le y$ if $x | y$. The extreme examples: define $a \le b$ iff $a = b$ (the
+    \textbf{discrete/trivial ordering}). The opposite extreme is where either
+    $a \le b$ or $a \le b$ for any pair $(a, b)$. This is called a
+    \textbf{total/linear ordering}.  So if $A \subset \mathbb{R}$ and you
+    define $a \le b$ if $b - a \ge 0$.
+\end{exmp}
+
+The reason to look at these extreme examples is because if I give you an
+arbitrary partially ordered set, to what extent can you find subsets of the
+extremes?
 
 \end{document}
