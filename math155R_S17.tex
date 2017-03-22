@@ -1122,4 +1122,116 @@ The reason to look at these extreme examples is because if I give you an
 arbitrary partially ordered set, to what extent can you find subsets of the
 extremes?
 
+\section{March 22, 2017}
+
+\subsection{Partially ordered sets}
+
+A lot of this material applies to infinite sets and even uncountable sets, but
+for the most part the things we are going to be doing involve finite sets.
+
+\begin{defn}[Partially ordered set]
+    A partially ordered set is a set $A$ and a relation $\le$ such that $a \le
+    a$, $a \ge b \centerdot b \ge c \rightarrow a \ge c$, and $a \ge b
+    \centerdot b \ge a \rightarrow a = b$. You can think of this as a subset
+    $\Sigma \subset A \times A$. Also any subset $B \subset A$ inherits the
+    structure of the partially ordered set.
+\end{defn}
+
+\begin{exmp}[Extreme examples]
+The extreme examples are $\Sigma = \Delta$ i.e. $a \le b \Rightarrow a = b$
+(discrete partial ordering), called an \textbf{antichain}.  If $\forall a, b
+\in A$, either $a \le b$ or $b \le a $ is called a \textbf{totally ordered}
+(linearly ordered). If $A$ is finite and totally ordered then there exists a
+unique bijection for $A \rightarrow <n>$ which pres
+totally ordered set is called a \textbf{chain}.
+\end{exmp}
+
+If you take an arbitrary partially ordered set, what can you say about the
+existence of chains and anti-chains within that set? We want to express
+something about the cardinality of the  longest possible chain or anti-chain.
+
+\begin{exmp}[Power set]
+The other example is if $S$ is any finite set and let $P(S)$ be the power set
+of $S$, then we have a partial ordering on $P(S)$ by $A \le B \Leftrightarrow A
+\subset B$ for $A, B \in P(S)$.
+\end{exmp}
+
+\begin{defn}[Least element]
+    $a \in A$ is a least element if $a \le b$ for all $b \in A$.
+\end{defn}
+
+\begin{defn}[Minimal element]
+    $a \in A$ is a minimal element if $b \le a \Rightarrow b = a$.
+\end{defn}
+
+Also note the equivalent definitions for greatest and maximal elements. 
+
+\begin{lemma}
+    Every partially ordered set has minimal elements
+\end{lemma}
+
+\begin{proof}
+    Start with $a_0$, choose $a_1 \le a_0, a_1 \ne a_0$; keep on choosing $a_0
+    \ge a_1 \ge a_2 \ge a_3$. Eventually we have to repeat in this sequence,
+    and so for some $k < l$ we have $a_k \ge a_{k + 1} \ldots > a_l = a_k$. But
+    this isn't possible by anti-symmetry, so you have to find a minimal
+    element. Note this only works for finite sets (the integers have no minimal
+    element).
+\end{proof}
+
+\begin{defn}[Height]
+    For a PO set $A$, $a \in A$, define $\mathrm{ht}(a)$ as the maximum length
+    of a chain $a = a_1 \ge a_2 \ge a_3 \ldots \ge a_k$. So $\mathrm{ht}(a) =
+    0$ means that $a$ is a minimal element. The height of $A$ is simply maximum
+    of the height of its elements: $\max \{\mathrm{ht}(a) : a \in A\}$. This is
+    the maximal possible length of a chain $C \subset A$.
+\end{defn}
+
+\begin{defn}[Width]
+    Define $\mathrm{width}(A)$ to be the maximum cardinality of an anti-chain
+    in $A$. 
+\end{defn}
+
+\begin{defn}[Order-preserving map]
+    We say any map $f: A \rightarrow B$ between two PO sets is order-preserving
+    if $a \le a' \Rightarrow f(a) \le f(a')$. We say $f$ is an isomorphism if
+    $a \le a' \Leftrightarrow f(a) \le f(a')$. That $f$ is an isomorphism
+    implies that $f$ is injective. If you have two distinct elements of that
+    map to the same element is contradictory.
+\end{defn}
+
+\begin{prop}
+    Given any $A$, $|A| = n$, there exists and order-preserving map $A
+    \rightarrow \{1, \ldots, n\}$. Think of a partial ordering as a subset of
+    $A \times A$, we're saying that this subset can be enlarged to a subset
+    that contains a total ordering.
+\end{prop}
+
+\begin{proof}
+    By induction on $n$. Chose maximal element $a \in A$, by induction we have
+    an order-preserving $f: A \setminus \{a\} \rightarrow \{1 \ldots (n-1) \}$,
+    so just setnt $a \rightarrow n$ and we have $\bar{f}: A \rightarrow \{1,
+    \ldots, n\}$. Since $a$ is maximal and sent to the largest of $n$ we have a
+    total ordering.
+\end{proof}
+
+\begin{prop}
+    If $A$ is isomorphic to a subset of $P(A)$, then $\phi: A \rightarrow P(A)$
+    will send $a$ to a subset $\phi(a)$ which is $\{b \in A: b \le a\}$.
+\end{prop}
+
+\begin{prop}
+    With $|A| = n$, the height of $P(A)$ is $n$. The width of $P(A)$ is ${n
+    \choose n/2}$. If we look at the collection of subset $\{S \subset A: |S| =
+    k\}$ is antichain of size ${n \choose k}$. This is largest when $k$ is
+    $n/2$ or $(n-1)/2$. We claim that this is the width of the power set.
+\end{prop}
+
+\begin{proof}
+    Let $X$ be the set of all bijections from $A \rightarrow \{1, \ldots, n\}$
+    ($A$ is just an arbitrary set, no ordering). Assume $K, K_@, \ldots K_q$ is
+    an antichain in $P(A)$. Claim that $q \le C$. Consider $X_i \subset X$
+    where $X_i = \{\phi : \phi(k_i) = \{1, 2, \ldots, |k_i|\}\}$.
+\end{proof}
+
 \end{document}
