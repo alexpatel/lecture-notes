@@ -1,0 +1,153 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+
+\usepackage[T1]{fontenc}
+\usepackage{ccfonts}
+
+\begin{document}
+
+\begin{center}
+\textbf{Math 122: Final Review} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+\today
+\end{center}
+
+From the practice final: 5, 9, 10, 6
+
+\begin{itemize}
+	\item
+        Practice Final \# 5: Prove group of order $1495 = 5 \times 13 \times
+        23$ is cyclic. Number of Sylow 5-subgroups divides 1, 13, 23, or $13
+        \times 13$, but neither of the final three is $1 \mod 5$, and so there
+        is only one Sylow 5-subgroup, which is $C_5$ because 5 is prime, and
+        this subgroup is normal.
+
+        The same thing happens for Sylow 13-subgroup and Sylow 23 subgroup. So
+        the Sylow subgroups are $C_5 = \langle a \rangle, C_13 = \langle b
+        \rangle, C_23 = \langle c \rangle$, and all of them are normal. 
+
+        Take some element $a \in C_5$ and conjugate by $b \in C_13$. So,
+        $bab^{-1} = a^m$. We want to prove that $m = 1$ to show that the group
+        is abelian and so cyclic. Similarly, $a^{-1}ba = b^n$.
+
+        So $ba = a^mb$ and substituting into second you get $a^{-1}(a^mb) =
+        b^n$. So $a^{m-1} = b^{n-1}$. Since these are both equal, they must
+        both be 1, so $m = n = 1$, and so $a$ and $b$ commute. The same
+        argument applies to the other two pairs of Sylow subgroups, and so you
+        get that all elements commute with one another.
+
+        So you get generators $a, b, c$ where $a^5 = b^13 = c^23 = 1$ and $ab =
+        ba, bc = cb, ca = ac$. The fact that the generators commute with
+        eachother shows that the group is $C_5 \times C_13 \times C_23$.
+
+    \item
+        Practice Final \# 9: $R$ is a ring with ideals $I$ and $J$. $I + J =
+        \{x + y| x \in I, y \in J\}$.
+
+        Part (a) show $I + J$ is an ideal - omitted, just go from the definition.
+
+        Part (b) Show if $I + J = R$ then $f: R \rightarrow R/J \times R/I$
+        that sends $a \rightarrow (a, a)$ is surjective. 
+
+        So take $(x,y) \in R/I \times R/J$. We want $f(a) = (x, y)$, so $x =
+        a+I$ and $y = a + J$. So $a = x + I$ and $a = y + J$. If we can find an
+        $a$ so that $a = x + I$ and $a = y + J$ then we are done.  So then
+        subtracting the two equations we get $0 = x + I - (y + J) = x - y + (I
+        = J) \Rightarrow y - x = I + J$. But this means that $\exists x \in I,
+        j \in J$ such that $ i + j = y - x \Rightarrow i + x = -j + y$.
+
+    \item 
+        Practice Final \# 10: 
+
+        $a, b \in R, \exists s, t \in R$ such that $as + bt = 1$.
+
+        Part (a) show $a^n, b$ are relatively prime. $a^2s + abt = a$, plug in
+        for $a$ in first equation, you get $(a^2s + abt)s + bt = 1 = a^2s^2 +
+        abts + bt = 1$ so $a^2s^2 + b(ats + t) = 1$. Do the same for $a^3s' +
+        abt' = a$. Then prove by induction.
+
+        Part (b) show $a^n, b^n$ are relatively prime. Easy, just assume the
+        result of (a). 
+
+        Part (c) Ideals $I, J$ are relatively prime so that $I + J = R$ then
+        $I^n, J^m$ are relatively prime so that $I^n + J^m = p$. Because $I + J
+        = R$, $\exists a \in I, b \in J$ such that $a + b = 1$. Also, if you
+        know $a + b = 1$ for $a \in I, b \in J$ then you know that $I + J = R$
+        by just multiplying by any $r$.
+
+        Assume $a + b = 1$. Re-write as $a(1) + b(1) = 1$. So $a^m(s) + b^n(t)
+        = 1$. But then $a^m \in I^m$ and $b^n \in J^n$, so $a^m(s) \in I^m$ and
+        $b^n(t) \in J^n$ and so $I^m$ and $J^n$ are relatively prime.
+
+    \item 
+        Practice Final \# 13
+
+        $$x^4 + x^2 + 1 = x(x^3 + 1) + x^2 + x + 1$$
+        $$x^3 + 1 = (x + 1)(x^2 + x + 1)$$
+
+    \item
+        Practice Final \# 12
+
+        Think of a free module of rank 3 as a vector space on three coordinates.
+
+        $M \subset R$ is a submodule. 
+
+        (1) Show $M$ is an ideal. Just go from the definition.
+
+        (2) Show if $R$ is PID then $M$ is either the zero module or or else
+        free of rank 1.
+
+    \item
+        Practice Final \# 1
+
+        There are either 1 or 11 Sylow 5-subgroups, but there is only 1 Sylow
+        11-subgroup. Take $a^5 = b^{11} = 1$, then $aba^{-1} = b^n$ so
+        $a^5ba^{-5} = b^{n^5} = b$. So $n^5 \equiv 1 \mod 11$
+
+    \item
+        Practice Final \# 6
+
+        $R^\times$ is group of units, $R_+$ is $R$ with abelian group addition.
+
+        Part (a) take $\lambda \in R^x$, take $\phi(\lambda): R_+ \rightarrow
+        R_+$ that sends $x \rightarrow \lambda x$ is an automomorphism.
+        Straightforward to show it is homomorphism. Next consider why it is an
+        isomorphism.
+
+        First, $x \ne y $ then $\lambda x \ne \lambda y$. True because $\lambda
+        x - \lambda y = \lambda (x - y)$. Suppose this is equal to 0. Then
+        since $\lambda is a unit$, $\exists \lambda'$ such that $\lambda '
+        \lambda = 1$. So then $\lambda' \lambda (x-y) = 1(x-y) \Rightarrow x =
+        y$ which is a contradiction.
+
+
+        Part (b) show $\phi: R^\times \rightarrow Aut(R_+)$ is a group
+        homomorphism. $\phi$ sends $\lambda$ to $\phi(\lambda)$. Must show
+        sends identity to identity and that it sends $\lambda \lambda'
+        \rightarrow \phi(\lambda)\phi(\lambda') = \phi(\lambda\lambda')$.
+        $\phi(\lambda')\phi(\lambda)(x)  = \lambda'\lambda x$ but
+        $\phi(\lambda'\lambda)(x) = \lambda'\lambda x$ so it is a group
+        homomorphism.
+
+        Part (c) Show when $R = \mathbb{Z}/n$ then $\phi: R^\times \rightarrow
+        Aut(R_+)$ is an isomorphism of groups.
+
+\end{itemize}
+
+\end{document}
