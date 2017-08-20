@@ -1,0 +1,65 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage{etoolbox}
+\usepackage{amsthm}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+\makeatletter
+\pretocmd\start@align{\setcounter{equation}{0}}{}{}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+
+\newcommand{\concat}{\mbox{$^{^\frown}$}}		        % concatenation
+\newcommand{\der}{\vdash}						        % derives
+\def\bsq#1{\lq{#1}\rq}                                  % single quotes 
+\renewcommand{\and}{\centerdot} 				        % conjunction
+\newcommand{\n}{\mathbin{\sim}}					        % negation  
+\newcommand{\then}{\supset} 					        % conditional
+\renewcommand{\o}{\vee}							        % disjunction 
+\newcommand{\ai}{\rotatebox[origin=c]{180}{A}}          % universal quantifier with serifs
+\newcommand{\ei}{\rotatebox[origin=c]{180}{E}}          % existential quantifier with serifs
+\newcommand{\form}[1]{\mbox{\boldmath $#1$}}	        % formal numeral
+\newcommand{\f}[1]{\mathrm{#1}}                         % Log-Like Functions
+\newcommand{\con}{\text{(Con)}}
+\newcommand{\conn}[1]{\text{Con}(\text{#1})}
+\newcommand{\prov}{\f{Prov}}                            % Prov
+\newcommand{\rov}{\f{Rov}}                              % Rov
+\newcommand{\corn}[1]{\ulcorner #1 \urcorner}           % Corner Braces
+\newcommand{\pcorn}[1]{\prov(\corn{#1})}                % Prov + Corner Braces
+\newcommand{\rcorn}[1]{\rov(\corn{#1})}                 % Rov + Corner Braces
+\newcommand{\rtcorn}[1]{\f{Refut}(\corn{#1})}           % Refut + Corner Braces
+\newcommand{\dpa}{\der_{\text{PA}}}                     % derivable in PA
+\newcommand{\daca}{\der_{\text{ACA}}}                   % derivable in ACA
+\newcommand{\ppa}[1]{\prov_{\text{PA}}(\corn{#1})}      % pcorn + corn in PA
+\newcommand{\paca}[1]{\prov_{\text{ACA}}(\corn{#1})}    % prov + corn in ACA
+\newcommand{\bx}{\Box}
+\newcommand{\dm}{\Diamond}
+
+\begin{document}
+
+\begin{center}
+\textbf{Template Document} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+\today
+\end{center}
+
+\begin{enumerate}
+    \itemsep0em 
+	\item 
+\end{enumerate}
+
+\end{document}
