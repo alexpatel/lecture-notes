@@ -1,0 +1,234 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage{etoolbox}
+\usepackage{amsthm}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+\makeatletter
+\pretocmd\start@align{\setcounter{equation}{0}}{}{}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\renewcommand{\part}[1]{\frac{\partial }{\partial #1}} 
+\renewcommand{\part}[2]{\frac{\partial #1}{\partial #2}} 
+
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+\textbf{Applied Math 158: Feedback Control Systems} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+\today
+\end{center}
+
+\tableofcontents
+
+\section{September 5, 2017}
+\begin{itemize}
+    \itemsep0em 
+    \item Reading: AM Sections 2.1 - 2.4.
+    \item Agenda: (1) introduce "modeling" (ODE) and (2) state, inputs and outputs. 
+    \item Last class, we talked about speed control: $m\dot{v} = F - cv$ where $\dot{v}$ is speed, $F$ is force, and $cv$ is friction. In a spring-mass system, we would like to design the force $f$ to use to maintain the spring at position $q$ at location $q*$. 
+    \item How are we going to design the system to apply the force? If I already had a system in frontof me, I can just play around.
+    \item But if we don't have the system, we need to do some modeling to see what we'd expect. We'd like to model how $f(t) \rightarrow q(t)$. This function is the mathematical model. We know tha t $F_{net} = ma(t)$ and that:
+    $$F - kq - cv = ma$$
+    But since $v = \frac{dq}{dt}$ and $a = \frac{d^2q}{dt^2}$, we can reduce the number of variables.
+    $$m\ddot{q} + c\dot{q} + kq = F = U(t)$$
+    $q$ we call the \textbf{state}. Now we can put them together to get: input $F$ $\rightarrow (m\ddot{q} + c\dot{q} + kq = F \rightarrow q$. In this example $q$ is both state and output.
+    \item A standard example of the state space model is $\dot{x} = f(x, u)$ and $y = h(x, u)$. Here $x$ is a state, $u$ is input, $y$ is output, and $f$ and $h$ are just functions. So any model you come up with (for physics, economics, etc.) you can just translate into this standard form.
+    \item To force the above exmple into the model, try $x = \begin{bmatrix}x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} q \\ \dot{q} \end{bmatrix}$ so that $\dot{x_1} = \dot{q} = x_2$ and $\dot{x_2} = \dot{q} = \frac{F - kq - cq}{m} = \frac{F - kx_1 - cx_2}{m}$. So, $$\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} x_2 \\ \frac{-kx_2 - cx_2 + F}{m} \end{bmatrix} = f(x, u)$$. Note that $f(x, u)$ is a linear function 9(can be written in the form $AX + BU$.
+    \item Based on this example, what does "state", "input", "dynamics", and "output" mean?
+    \begin{itemize}
+        \item  State: memory, past -> future. 
+        \item  Input: control, disturbance - anything that is outside of the system itself
+        \item Output: measurement
+    \end{itemize}
+    \item A system can have many models to answer different questions (often dependent on time scale and spatial scale). For example, consider the system of electricity where (1) New England vs. New York City, (2) Harvard facilities, (3) Maxwell Dworkin. In the previous example, if you just wanted to keep the spring at a constant speed then the input, dynamics, and state would be the same but the output would be different.
+    \item \textbf{Epidemic Model (SIR Model)}. Initial population $N$, number of susceptible $S(t)$, number of infected $I(t)$, number of removed (recovered \& immunized) $R(t)$. The controller is the vaccine $u(t)$. How to remove the epidemic?
+    \begin{align*}
+        S(t) &= - \frac{\beta SI}{N} - U(t) \\
+        I(t) &= \frac{\beta SI}{N} - \gamma I \\
+        R(t) = rI + U(t) \\
+    \end{align*}
+    $SI$ are the most important parts of that fraction, $\frac{\beta}{N}$ is somewhat extra. To fit into the standard model, let $\dot{x} = f(x, u)$, $x_1 = s, x_2 = I, x_3 = R$.
+    \item \textbf{Opinion dynamics in social networks:} Each node in the graph is a person. If I'm going to give out free iphones, who should I give it to so that I maximize the influence to market the product (spread good opinions of product)? How are we going to model this: let $x_i(t)$ be the opinion of person $i$ about one product at time $t$.
+    $$\dot{x}_i(t) = \frac{W_{ii} x_i(t) + \sum_N W_{ij} x_j(t)}{\sum_N W_{ij}} + U_i(t)$$
+    \item \textbf{Economy/market} - we have suppliers and consumers (demand) and want to model how the price is going to change. Let $s_1(t)$ and $s_2(t)$ be the amount available from suppliers 1 and 2 at time $t$, $d(t)$ be consumer demand, and $p(t)$ be the price. How is a rational company going to make a decision about setting $\dot{S_1}(t)$ (how much product should they produce)?.
+    $$ \dot{S_1}(t) = \alpha_1 \left( -C_1(s_1(t)) + p(t)\right)$$
+    $$ \dot{S_2}(t) = \alpha_2 \left( -C_2(s_2(t)) + p(t)\right)$$
+    $$ \dot{d(t)} = \beta(B(d(t)) - p(t)$$
+    $$ \dot{p(t)} = k(d - (s_1 + s_2))$$
+    Where $B(d(t))$ is called ``marginal utility". If $d > (s_1 + s_2)$ then the price increases, decreases otherwise.
+    \item \textbf{Spring \#2} We have two masses and three springs ordered such that $\text{wall} | k_1 | m_1 | k_2 | m_2 | k_3$ and $U(t)$ is the total length of the spring system. We want to pull spring $k_3$ such that we can control the speed and position of $m_2$. How do you design $U(t)$ so as to move $m_1$?
+    \begin{align*}
+    m_1a_1 &= F_1 \\
+    m_1r_! &= -k_1q_1 + k_2(q_2 - q_1) \\
+    m_2a_2 &= F_2 \\
+    m_2\ddot{q_2} &= -k_2(q_2 - q_1) + k_2(U(t)q_2(t)) - C\dot{q_2} \\
+    \dot{x} &= F(x, u) = AX + BU
+    \end{align*}
+    Try to write this in linear form as an exercise - how do you write down $F$ and how do you come up with $A, B$.
+\end{itemize}
+
+\section{September 7, 2017}
+\begin{itemize}
+    \itemsep0em 
+    \item Section Friday 11-12pm, location to be announced.
+    \item Homework 1 due next Thursday in class.
+    \item Recall: with $x$: state, $u$: input, $y$: output, then $\dot{x} = f(x, u)$ and $y = g(x, y)$, with the spring example we had $m\ddot{q_1} = k_2(q_2 - q_1) - k_1q_1$ and $m\ddot{q_2} = k_3(u - q_2) - k_2(q_2 - q_1) - c\dot{q_1}$. We have two equations, but both equations have variables in the second order. How are we going to translate it into the standard form? Let $x_1 = q_1, x_2 = q_12, x_3 = \dot{q_1}, x_4 = \dot{w_2}$. So,
+    \begin{align*}
+        f_1(x, u) &= \dot{x_1} = x_2 \\
+        f_2(x, u) &= \dot{x_2} = x_4 \\
+        f_3(x, u) &= \dot{x_2} = \frac{1}{m_1}(k_2(x_2 - x_1) - kx_1) \\
+        f_4(x, u) &= \dot{x_4} = \frac{1}{m_2}(k_3(u - x_2) - k_2(x_2 - x_1) - cx_4)
+    \end{align*}
+    Then the equation for $f(x, u)$ is $f(x, u) = \begin{bmatrix} f_1 \\ f_2 \\ f_3 \\ f_4 \end{bmatrix}$ - this is a time-invariant system, it does not depend on the current time. Notice that everythin gin this system is a linear function of $x$ and $u$. We want to write this equation in the form $f(x, u) = A\begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix} + Bu$. So $A$ is a 4x4 matrix and $B$ is a 4x1 matrix - you know you need four rows because you have four functions, you have for variables $x$ in the left term and just one term $u$ in the right term. To not make a mistake, think about the dimensions of the matrices you need and then fill it in. $A$ is easy because $A$ is always going to be a matrix in this class. $B$ is trickier because you can have multiple controllers.
+    $$ f(x, u) = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ -\frac{k_2 + k_1}{m1} & \frac{k_2}{m1} & 0 & 0 \\ \frac{k_2}{m_2} & -\frac{k_2 + k_3}{m_2} & 0 & -\frac{c}{m_2} \end{bmatrix}\begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix} + \begin{bmatrix}0 \\ 0 \\ 0 \\ \frac{k_3}{m_2} \end{bmatrix} u$$
+    \item Is the controller we have enough to control mass 1 in the system? Is it possible make your controller take on a value that would make $q_1$ be at any position you want? We'll find the answer in a couple of weeks.
+    \item \textbf{Inverted Pendulum} - you have a pendulum of length $l$ at angle $\theta$ with respect to the $y$-axis and a mass $m$ at the end, and you have a controller $u$ that can pull only in the horizontal direction. We need to come up with a model for how your force $u(t)$ affects your angle $\theta(t)$. We can use mechanics to do this. Specifically, we'll use the equation $T = J \cdot \alpha$, where $T$ is torque, $J$ is moment of intertia, and $\alpha$ is the angular acceleration.
+    \begin{align*}
+        T &= mgl\sin \theta - u l \cos \theta \\
+        J &= ml^2 \\
+        ml^2 \ddot{\theta} &= mgl\sin \theta - ul \cos \theta
+    \end{align*}
+    In standard form,
+    \begin{align*}
+        x_1(t) &= \theta \\
+        x_2(t) &= \dot{\theta} \\
+        \begin{bmatrix} \dot{x_1} \\ \dot{x_2} \end{bmatrix} &= \begin{bmatrix} x_2(t) \\ \frac{mgl\cos x_1 - ul \sin x_1 }{ml^2}\end{bmatrix} \\
+        y &= \theta(t), \theta(t) \rightarrow 0
+    \end{align*}
+    This is a non-linear system, in this class we're going to linearize it. We'll talk about when linearization will work and wehn it will not work.
+    \item \textbf{RL Circuit}  - Consider a circuit with a voltage $V_s$ with an inductor $L$  and a resistor $R$ in series. We want to control $V_{out}$, the output voltage. If $u = V_s$, then how can you change $u$ so as to control $V_{out}$?
+    
+    Using Kirchhoff's voltage lows, we can assign voltage $V_R$ to $R$ and $V_L$ to $L$ and have the equations:
+    \begin{align*}
+        V_S - V_R - V_L &= 0 \\
+        V_R &= R I \\
+        V_L &= L \dot{I}  = V_S - V_R = V_S - RI\\
+    \end{align*}
+    This last equation is a dynamical model which describes how the voltage source affects the current. Replacing $I$ with $x$
+    \begin{align*}
+        \dot{x} &= \frac{1}{L}(U - Rx) \\
+        y = V_R &= Rx \\
+    \end{align*}
+    \item $\dot{x} = \frac{dx}{dt}$. Instead of going to the differential equation, some models are written as \textbf{Difference Equations}. By this, she means: $x[k + 1] = f(x[k], u[k])$ and $y[k] = h(x[k], u[k])$. This is also called a \textbf{discrete system} because time is discrete instead of continuous. All of the theory we've learned can be applied here. 
+    \item \textbf{Predator-Prey} If we have a Lynx and a hare, how do we model the relation between the two and how they affect each other? Let:
+    \begin{itemize}
+        \itemsep0em 
+        \item $H$ be the population of hares
+        \item $L$ be the population of lynxes
+        \item $k$ is the discrete time index (e.g. the month number)
+        \item (controller) $u$ that is the food supply for the hares.
+    \end{itemize}
+    We're trying to model $U \rightarrow \begin{bmatrix} L \\ H \end{bmatrix}$. Our model can be:
+    $$L[k + 1] = L[k] + cL[k]H[k] - d_f[L[k]$$
+    So the number of lynxes next month depends on: the number of lynxes this month, the \textit{production rate}, and the last term is the death rate of the Lynx. Similarly, to model the hares (the third term is the hares getting eaten by the Lynx):
+    $$H[k + 1] = H[k] + b_r(u)H[k] - aL[k]H[k] - d_nH[k]$$
+    This model is a good starting point based on intuition. But there are some terms that are pretty hand-wavy, the real data can be helpful, here. 
+    \item \textbf{Block Diagram} - How can you model complex systems? Use block diagrams, draw small blocks and ten put them together. We'll cover on Friday how to use Simulink to do this.
+    \item \textbf{Dynamic Behavior (and stability)} - consider $\dot{v} = -av$, if you have $v(0) = v_0$ then the dynamical behavior is what is $v(t)$? How is the speed going to evolve over time? The answer is $v(t) = e^{-at} \cdot v_0$. As $t \rightarrow \infty, v(t) \rightarrow 0$. Now you have a controller $u = bv$ so you have $\dot{v} = (b-a)v$. If $b >a$ , then $v(t) = e^{(b-a)t}V_0$ and you accelerated ($v(t) \rightarrow \infty$).  That $v(t)$ converges in the first case means that it is \textbf{stable}; that it diverges in the second case means that it is \textbf{unstable}.
+    \item If we have $\dot{x} = f(x,u)$, then in this class $u$ is always going to be a function of $x$ and so $f(x, u) = f(x, u(x)) = F(x)$ (system *). So now we look for the solution of $\dot{x} = F(x)$. Formally, $x(t)$ is a solution of the system * on time interval $[t_0, t_f]$ if $\frac{dx(t)}{dt} = F(x(t)) \forall t_0 < t < t_f$. For example, the linear system $\dot{x} = Ax + Bu$, we have a form for this solution; but for the non-linear system we do not have such a closed-form solution.
+\end{itemize}
+
+\section{September 14, 2017}
+\begin{itemize}
+    \itemsep0em 
+    \item Agenda: dynamic system colution, phase portraits, equilibrium, stability.
+    \item Recall: $\dot{x} = f(x, u)$ (system control input), $u = k(x)$ (state-feedback control, $\dot{x} = f(x, k(x) = F(x)$ (closed-loop system). Good: stability, response time, etc. The equation $u = k(x)$ is call state feedback contorl, so like with autonomous driving we dont' have to put in any extra input to the system, that's why we can reduce it down to $F(x)$. This is what the \textbf{closed-loop} part of the system is, you close the loop---this means that how you control is based on your state. Today we're going to talk about what is meant by stability in the context of this.
+    \begin{defn}[Solution]
+        $x(t)$ is a solution to $\dot{x} = F(x)$ with initial value $x_0 \in \mathbb{R}^n$ at $t_0 \in \mathbb{R}$ if when $x(t_0) = x_0$,
+            $$\frac{d x(t)}{dt}= F(x(t) \forall t_0 < t < t_f$$
+    \end{defn}
+    \item In order to understand the dynamical behavior for the system is to solve the equation $\dot{x} = F(x)$. But not every system can give you a closed-form solution; what this definition gets you is that if you want to check if $x(t)$ is a solution to the euqation, it's easy to check but potentially hard to come up with. You can also check the derviative; if the derivative satisfies this equation, then it works as well.
+    \item For a n example of this, consider the spring-mass system with $k$ spring, mass $m$, and input $u$. Remember that we worked through the dynamics:
+    $$m\ddot{q} + c\dot{q} + kq = u$$
+    % We know from the first-order systems of last check that if $x$ is one dimension (first order differential equation), then it's not particularly interesting. 2nd order equations have a lot of dynamics, and depending on a lot of parameters we can differentiate. The solution to that equation is pretty complicated, she's now going to tell us the details fo this solution and there are are three types of techniques that show up regardless of what differential equation you are using. introduce $\zeta = \frac{\sqrt{mc}{2k}$, $\omega_0$ such that $2\zeta \omega_0 = \frac{c}{m}$ and $\omega_0^2 = \frac{k}{m}$.
+    \begin{align*}
+        m\ddot{q} + c\dot{q} + kq &= 0 \\
+        % \ddot{q} + \frac{c}{m} \dot{q} + \frac{k}{m}q &= 0 \\
+        % \ddot{q} + 2\zeta \omega_0 \dot{q} + \omega_0^2 q = 0 \\
+    \end{align*}
+    If we have two states $x_1 = q$ and $x_2 = \frac{\dot{q}}{\omega_0}$. Remember for this one that the state variable is not unique, you cannot just use define the state variable because you also have a factor of $\omega_0$.
+    \begin{align*}
+        \frac{d}{dt} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} &= \begin{bmatrix} \omega_0 x_2 \\ -\omega_0 x_1 - 2\zeta \omega_0 x_2 \end{bmatrix} \\
+        &= \begin{bmatrix}0 & \omega_0 \\ -\omega_0 & -2 \zeta \omega_0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \\
+    \end{align*}
+
+    Consider if $\zeta > 1$, then:
+    \begin{align*}
+        x_1(t) &= \frac{\beta x_1(0) + x_2(0) }{\beta - \alpha} e^{-\alpha t} - \frac{\alpha x_1(0) + x_2(0)}{\beta - \alpha} e^{-\beta t} \\
+        (\alpha = \omega_0(\zeta + \sqrt{\zeta^2 - 1}), & \beta = \omega_0 (\zeta - \sqrt{\zeta^2 - 1})) \\
+    \end{align*}
+
+    Consider if $\zeta = 1$, then:
+    \begin{align*}
+        x_1(t) = e^{-\zeta \omega_0 t}(x_1(0) + x_2(0) + \zeta\omega_0 x_1(t)) \\
+    \end{align*}
+
+    Consider if $0 < \zeta < 1$, then:
+    \begin{align*}
+        x_1(t) &= e^{-\zeta \omega_0 t)}(x_1(0)\cos \omega_\alpha t + \frac{1}{\omega_\alpha}(\omega_0 \zeta x_1(0) + x_2(0))\sin(\omega_\alpha t)) x_2(0) + \zeta\omega_0 x_1(t)) \\
+        \omega_\alpha &= \omega_0 \sqrt{1 - \zeta^2} \\
+    \end{align*}
+
+    We have the solution to the equation $\dot{x} = ax \Rightarrow x(t) = e^{-at}x_0$, somehow the exponent of $e$ in the equation where $\zeta = 1$ is a similar sort of situation. If we have the equation $x_1(t) = (x_1(0) \cos\omega_\alpha t + \frac{x_2(0)}{\omega_\alpha} \sin \omega_0 t)$. This is just going to oscillate when $\zeta = 0$. So any equation you have that I guess fits in this form is going to be such that when $\zeta = 0$ then it is go9ing to converge to zero in the limit of large $t$.
+
+    So we can say that the system is stable because it's eventually going to converge to a point. For the special case when $\zeta = 0$, it's never going to go outside of the range of $|x_1(t)|$.
+    \item \textbf{Phase Portraits (2-dimension)}
+    $$\begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} = \begin{pmatrix}F_1(x_2, x_2) \\ F_2(x_1, x_2) \end{pmatrix} $$
+    To draw this graph, just put $x_1$ as the $x$ axis and $x_2$ as the $y$-axis and then draw a vector value that is given the function: so your point would be $F_1(x_1 = 1, x_2 = 3), F_2(x_1 = 1, x_2 = 3))$. So for each point if you draw the vector for every point, then you look at the vectors and it tells you how the system is going to change. So if you have a bunch of arrows that are pointing down, then you can tell what your dynamics are going to be.
+
+    If you've got some sort of cycles that don't converge to a point but the arrows are such that they yield a circle then you have a \textit{limit cycle}. So you can have it such that there's a circle and then if you are outsie the circle then eventually you'll get in the circle, and then if you're in the circle then you stay in the circle. And then there's potentially one special point (on the radius) that will just stay in that radious perpetually.
+    
+    \item Now she's going to make the discussion more ``rigorous" (I don't know what that means in the context of applied math).
+    \item \textbf{Equilibrium Point} - an equilibrium point represents  ``stationary conditions" for dynamics. For example, say that $x^{eq}$ is an equilibrium point. This means that if $x(t_0) = x^{eq} \Rightarrow x(t) = X^{eq}$. To guarantee this one, the way you're going to calculate is by finding $\dot{x} = F(x)$ such that $F(X^{eq}) = 0$. 
+
+    Now if we come back to the spring-mass system, if we want to find the equilibrium point we'll have $\dot{x} = Ax$ and we want to find $Ax = 0 \Leftrightarrow x = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$.
+
+    \item Another example is with the inverted pendulum. So we have \textbf{no $u$} and also:
+    
+    $$\frac{d}{dt} \begin{bmatrix}\theta \\ \dot{\theta} \end{bmatrix} = \begin{pmatrix} \dot{\theta} \\ \frac{mgl}{J} \sin \theta - \frac{r}{J} \dot{\theta} \end{pmatrix}$$
+
+    With $\theta = 0, \theta = k\pi, \dot{\theta} = 0, \dot{\theta} = 0$. For the integral control, we have $\dot{x} = -ax + q\int_{t_0}^t q dt$ and $\dot{q} = a(x)$.
+
+    \item  Now back to the discussion of stability, for an unstable pendulum (inverted) we have $\theta = 0, \dot{\theta} = 0$, but for a regular pendulum hanging downwards has $\theta = k\pi, \dot{theta} = 0$.
+
+    How are we going to define stabilitiy? This means that $\forall \epsilon > 0, \exists \delta$ such that $\forall x_0$, if $|x_0 - x^{eq}| < \delta$ then $|x(t) - x^{eq}| < \epsilon, \forall t \ge 0$ (marginal stable). This doesn't require global stability, you just have to find a delta that is going to work (local stability).
+
+    In order to be \textbf{Asymptotically Stable}, you must have:
+    \begin{enumerate}
+        \item Stable in the sense of Layman. 
+        \item $\lim_{t \rightarrow \infty} x(t) = x^{eq}$.
+    \end{enumerate}
+
+    \item \textbf{Linear-Time-Invariant Systems} 
+    
+    You have an $n$x$n$ matrix $A$, $n$ x $p$ matrix $B$, $q$ x $n$ matrix $C$, $q$ x $p$ matrix $D$, all with values in $\mathbb{R}$.
+
+    WIth $u_1, u_2$, 
+    \begin{align*}
+        \dot{x}(t) &= Ax(t) + Bu(t) = F_1(x, u) \\
+        y(t) = cx(t) + Du(t) = G(x, u)\\
+        F_1(0, \alpha u_1 + \beta u_2) = F_1(0, \alpha u_1 + \beta u_2) = F_1(0, \alpha u_1) + F_2(0, \beta u_2) \\
+    \end{align*}
+
+    The last is the statement of linearity. Let $x(0) = 0$, we have $u_1(t) 
+
+
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,225 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage{etoolbox}
+\usepackage{amsthm}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+\makeatletter
+\pretocmd\start@align{\setcounter{equation}{0}}{}{}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+
+\renewcommand{\labelenumi}{\thesection.\arabic{enumi}}
+\renewcommand{\labelenumii}{\thesection.\arabic{enumi}}
+\renewcommand{\labelenumiii}{\thesection.\arabic{enumi}}
+
+\begin{document}
+
+\begin{center}
+\textbf{} \\
+Alexander H. Patel \\
+{\tt alexanderpatel@college.harvard.edu} \\
+Last Updated: \today
+\end{center}
+
+\tableofcontents
+
+\section{September 12, 2017}
+
+\begin{itemize}
+\itemsep0em 
+\item Aristotle's logic was the logic of syllogisms. He gave this lovely
+elegant and exhaustive theory of syllogisms which meant that there was nothing
+really to be added to it. The history of deductive logic began with Aristotle
+and stalled there, nowhere really to go. There was a little bit of extra
+movement in addition to the syllogism. The stoics had a lovely discussion of
+conditionals, but everything that they said was forgotten during the Dark Ages
+and so logic returned to being the theory of conditionals.
+\item people say with great assurance that all deductive reasoning comprises
+stringing together syllogisms. But you cannot do anything that Euclid did, for
+example, by saying that he was just stringing together syllogisms.
+\item The big leap forward largely came in the late 19th century with Frege.
+Aristotle  had things like "All Greeks are humans", "Some greeks are
+humans"---these are the tools he used to develop his logic. What Frege did was
+to give an analysis of these things. He took these sentences to be: $(\forall
+x) (Gx \rightarrow Hx)$ and $(\exists x)(Gx. Hx)$. He then handle the other
+sentential connectives,
+\item If you want to say, "All cows are purple", it's $\forall x (Cx
+\rightarrow Px)$. If you want to treat "most" on the analogy to the way that
+Frege treated "all", then to formalize "Most cows are purple", then you get a
+result if you do Fregian analysis. Frege's analysis does not work well for
+other quantifiers, but it does work well for the quantifiers used in
+Aristotelian logic.
+\item We know the logic of $\wedge$ (what is the truth condition), and we know
+the truth conditions for $\neg$, Frege's analysis of the conditionals give us a
+truth-functional reading of the conditionals where the truth or falsity of the
+conditional depends on tthe truth or falsity of its components. Frege went on
+to develop a theory whose rules abided by his truth-functional reading (the
+truth table for the conditional).
+\item Frege has this analysis of the quantifiers and he ad a logical system
+that treated conditionals truth-functionally, and on the basis of that he
+developed modern mathematical logic. Why did he develop modern mathematical
+logic? There was a real need for it brought about by teh advent of
+non-Euclidean geometry. As long as you stick to Euclidean geometry, you can
+both derive conclusions from axioms and be guided from spatial intuitions.
+Those two things work together to direct you, but in non-Euclidean gemoetry you
+don't have the spatial intuitions and so you have to make sure that your
+conclusions actually do follow from the axioms. You have to make sure that
+spatial intutions are not creeping into your reasoning; you have to check that
+your conclusions are actually following from your premises.
+\item Good reasoning is what you find in Euclid's Elements. Well, it turns out
+that Euclid's proofs aren't rigorous; if you look at Euclid's proofs, there are
+axioms and derivations that look like they rely on the axioms, but
+\textit{there are also pictures}. So what Euclid is doing is importing
+information that isn't contained solely in the axioms from the pictures, and so
+there was an urgent need for what counts as good reasoning in mathematics.
+Frege's theory fulfilled it. 
+\item You don't find a comparable need outside of mathematics. You almost never
+see rigorous deductions outside of a mathematical context. Scientists write
+down basic principles and draw consequences from the basic principles, but the
+conclusions are not purely logical but rather are making use of mathematics and
+counting on the mathematics being sound. It is the mathematicians who use
+logic. You seldom see an inference that is written out in full detail except in
+mathematics. In mathematics, the rules Frege gave us are exactly what is
+needed. In particular, the conditionals that you find in mathematical reasoning
+can all be understood as material conditionals.
+\item Sometimes they occur in the subjunctive mood ("If the square root of 2
+were not irrational, then you would get a contradiction") for \textit{reductio
+ad absurdum} arguments. But that's not really any different than the logic that
+Frege gave to us. 
+\item Mathematicians rarely ever need any other quantifiers than the standard
+logical ones, if you do then you just implement them in set theory (to express
+things like "for uncountably many x", "for almost all", etc.). The base logic
+that people use throughout mathematics use the truth-functional connective for
+conditionals.
+\item But in the rest of the sciences, they have an urgent need for
+conditionals that go beyond this. We want to say that "if you apply a voltage
+to this thing, then a current will pass through it." If you understand this as
+the material conditional, then if you have something that isn't a conductor the
+conditional will still be true. 
+\item When you talk about the theory of computable functions, then the
+functions that are uncomputable there are some functions that are more
+uncomputable than others. We can say things like the problem of testing whether
+a program computes a total function is undecidable, and we can ask whether
+there is going . But these fall into different layers of computability
+(relative computability), and so we're asking about whether we can solve such
+and such problem if we can solve a different class of problems, and this kind
+of thinking is not captured by the material conditional. Once you get the basic
+ideas of computability theory, then you can get computability theory just from
+ordinary math/logic. The logic of the partiuclar logic that articulates what is
+said in recursion theory was axiomized by Lemming. That's interested because we
+think of the counterfactual: "if this function were solvable by algorithm, then
+this other function would be solvable." But this isn't just counterfactual it
+is counterpossible---it is not possible for the antecedent to obtain.
+\item With a few exceptions, all we see in mathematics is the logic of the
+material conditional, and it's pretty much only in mathematics that we see
+fully written out arguments. It looks like there are exceptions for
+counterfactual conditionals. But for indicative conditionals, it looks as if
+there are no obvious exceptions.
+\item It was widely thought that the standard conditional with its truth table
+is perfectly fine for indicative but not subjective conditionals. Where people
+finally convinced themselves that they shouldn't be so complacent about
+accepting the truth table as completely characterizing the logic of
+conditionals came when people started looking at arguments that are validated
+by a Frege-type account but don't seem to quite be captured by it.
+\item \textbf{The Logic of Conditionals} - three rules:
+\begin{itemize}
+    \item Modus ponens - derive $q$ from $P$ and $P \rightarrow Q$.
+    \item Conditional proof - If $p \cup \{ P \}$
+    \item Peirce's Law - from $(P \rightarrow Q) \rightarrow P$ infer $P$.
+\end{itemize}
+This is good enough to capture material conditionals. The reason people become
+dissatisfied with the logic given to us by Frege is by coming up with examples
+that are validated by Frege's conditionals but don't at all fit the way people
+use it in English. 
+\item Occassionally, the shaving lather winds up in Vann's coffee because he
+brings his coffee into the bathroom when he gets ready in the morning. Vann
+believes today that "Tomorrow morning, I'll enjoy my cup of coffee", but he
+does not believe that "Tomorrow morning, my coffee will taste good if it has my
+shaving lather in it". A good argument is one such that if you are certain of
+the premises, then you're entitled to be 100 percent sure of the conclusion. By
+that standard, the above is a good argument. But Vann just believes that
+tomorrow morning it will taste good, but he is not completely sure of it
+because he could get shaving cream in it. If he were certain of the premise
+that he won't get shaving cream in his coffee, he could assert the conclusion.
+But real-life reasoning is never certain of anything, 
+\item A good relaxed standard of reasoning is that if you are certain of the
+premise then you can be certain of the conclusion, and so if you just think
+that the premise is highly likely (you have good reason to believe it), then
+you have good reason to believe the conclusion, as well. Ramsey made this
+distinction, distinguishing between the logic of certainty from the logic of
+truth, which is the way that human beings reason because we're almost never
+able to reason on the basis of things about which we're completely certain.
+\item The challenge to the material conditional as an account of indicative
+conditionals in English came from looking at arguments that are legitimated by
+the classical rules of deduction but for which English speakers are willing to
+accept the premises but unwilling to accept the conclusions. Seeing this
+mismatch between wht the theory tells us what good reasoning is and the way
+that people actually reason puts pressure on the classical account. That
+English speakers don't make inferences that we tell them they ought to make is
+reason to believe that the classical theory is mistaken.
+\item Consider: "If I put milk in my coffee, then it will taste good" and "If I
+put milk and shaving cream in my coffee, it will taste good". The second
+follows from the first by classical reasonsing. One of Dorothy Edginton's
+examples is: "I'll be home tonight before 6, therefore if I'm not home before
+6, the queen will worry". 
+\item There's an example from Ernie Adams: "if p then q and if q then r, then
+you can derive if p then r". So you can just assume p and derive r and then use
+conditional proof to derive "if p then r". "If Smith wins the election, Jones
+will go back to practicing law. If Jones dies before the election, Smith will
+win the election. Therefore, if Jones dies before the election, he'll go back
+to practicing law." An example involving negation is: from "if p then q" you
+can derive "if not q, then not p". But consider: "if I buy a car, I won't buy a
+Buick" yields "If I buy a Buick, then I won't buy a car." Or, from "it's not
+the case that if God exists, then we're free to do whatever we like" infer "God
+exists". Edgington's proof of the existence of God: "If God exists then it's
+not the case that if I pray then my prayers will be answered. I do not pray,
+and so therefore God exists". Or, from "if switch A and B are pulled, then the
+engine will start" infer "Either the engine will start if switch A is pulled or
+the engine will start if switch B is pulled". In order for the conclusion to be
+false, then it's true unless both disjuncts to be false; in order for both
+disjuncts to be false, A has to be true and S has to be false and B has to be
+true and S has to be false. So then A and B are both true, but then the premise
+is true.
+\item One thing that was going on with some of these examples is they are
+talking about the future. Is this a problem with talking about the future, or a
+problem with talking about conditionals? Or a problem with both?
+\item Another thing with some of these examples (coffee) is that if I'm
+completely sure of the consequent, then you are justified in being compeltely
+sure of the conditional. If you're not fully sure of the consequent, then
+you're doubt of the conditional will get passed down through to the premises
+(??).
+\item One thing that is at work here is the idea of conversational issues, that
+there are cases where people make an effort to be evasive and uninformative
+(like in a deposition). In general, you expect people to not saying something
+week when they could've said something strong. We wouldn't say "if the wind is
+blowing from the Northeast, then Theresa May is writing her resignation letter"
+rather than "Theresa May is writing her resignation letter" even though the
+truth values are the same becuase it violates the norms of good conversation to
+not be extraneous. These things sound very odd but they are in fact good
+inferences. They are just pragmatically infelicitous.
+\item Vann doesn't know what conclusion to draw from these examples, but it
+seems like at least we can get this much: it seems like the classical account
+is under pressure, maybe we have reason to be dissatisfied by this account.
+There maybe aren't reasons to reject the classical account, but there are
+reasons to be dissatisfied with it and so there are reasons for us to look for
+alternatives to the classical account.
+\end{itemize}
+
+\end{document}
