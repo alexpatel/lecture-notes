@@ -313,4 +313,105 @@ Last Updated: \today
 
 \end{itemize}
 
+\section{September 26, 2017: TLS and HTTPS}
+
+\begin{itemize}
+    \itemsep0em 
+	\item  Today we're going to finish our discussion of cryptography and then spend the bulk of the class talking aobut hTTPS and TLS (the encouraged way to protect one's security on the web).
+    \item \textbf{Hash functions}: take a variable sized message as input and then output a fixed-sized result. In computer security purposes, this is usually between 8 and 64 bytes. 
+    \item There are two desirable properites for a hash function:
+        \begin{enumerate}
+            \itemsep0em 
+            \item \textit{One-way property} - It should be hard to invert the function (given a hash value, it should be hard to generate an input with that hash value).
+            \item \textit{Collision resistance property} - It should be rare for two inputs to hash to same value. for an arbitrary intput to the hash function, it should be equally likely to hash to any value in the output space.
+        \end{enumerate}
+    \item A lof o hash functions will have these big tables of constants (digits of $\pi$, $e$, etc.) and then mixing the input with these constants (shifts, XORs).
+    \item The hash families that we'll see most often are \textbf{SHA}, \textbf{Whirlpool}, \textbf{MD5} (now insecure, meaning that it is easy to generate collisions in MD5).
+    \item We use hash functions to ensure the integrity of the messages that we send. To do this, we append a hash value for the message to the end of the message itself. When the recipient gets the message, the recipient can verify the hash value against the one included in the message. If they don't match, then there is good evidence that the message has been corrupted.
+    \item \textbf{Authentication} - this is the idea that we want for the recipient to figure ou thte identity of the person who sent a particular message. 
+    \item Say that we're using a symmetric crypto system (one that is based on the use of secret keys). In this case we can use \textit{message authentication codes} (MAC). 
+    \item MAC: calculate a hash value over a message that we're trying to authenticate and then concatenate it with the symmetric secret in the crypto system. We then send the message + MAC to someone who knows teh secret key.
+    \item What if we wanted to use a publi-key crypographic system (RSA signatures)? First, calculate the hash value for the message to sign $H$. Then we're going to generate a signature $SignedVal = H^d \mod n$. This is what the person who wants to sign the message is going to calculate (this is private, not revealed to anyone). Remember that $e$ is public but $d$ is private. The recipient can recover $H$ by $H = SignedVal^e \mod n$.
+    \item How does TLS use this machinery to protect the web?
+    \item First, we need to understand what is a \textit{certificate}.  A certificate binds a principle (a person, a machine, some actor in the crypto system) to a public key. The most popular type of certificate format is something called \textbf{X.509} format, which is just a standard describing all the things that need to be in a certificate.
+        \begin{enumerate}
+            \itemsep0em 
+            \item \texttt{Issuer: Verisign} (the CA that vouches for the principal's identity)
+            \item \texttt{Signature Algorithm: SHA1 with RSA Encryption}. This means that the issuer has an RSA key pair  and signs the SHA1 hash of this certificate.
+            \item \texttt{Subject: CN = foo.com} 
+            \item \texttt{Subject: Publicy Key Info} - something like foo.com.
+            \item \texttt{Public Key Algorithm: RSA Encryption}
+            \item \texttt{Modulus}
+            \item \texttt{Exponent}
+            \item \texttt{CA's signature over the cert}
+        \end{enumerate}
+    \item Web browsers ships with built-int trusted CAs.
+    \item There's always a bootstrapping problem with these cryptographic system. If you mess up how the CAs are handled, then all of this become problematic.
+    \item \textbf{HTTPS} (HTTP over TLS). The internet is built using a series of layers of networking protocols (in order): IP, TCP, HTTP. That is what things looked like with just HTTP. But with HTTPS, we stuck TLS between TCP and HTTPS.
+    \begin{enumerate}
+        \item First, the Client sends a \texttt{ClientHello} message with the max TLS version that they support, the ciphers that they support (RSA, AES, etc.), and a client random number.
+        \item Then the server is going to send a \texttt{ServerHello} message (also in cleartext) that contains the server certificate and the TLS version that will be used. Th server also sends back the ciphers that will be used (by looking through the list that the client supports), and a server-chosen random number.
+        \item Then, the client verifies that the server certificate was signed by a trusted CA. So if you could somehow subvert a trusted CA then you could convince the browser to accept an invalid server certificate.
+        \item The client then sends the pre-master secret (encrypted with server's RSA key, used to pick a symmetric key that is going to encrypt the traffic moving forward).
+        \item The client then sends over a change cipher spec message, which is a clear-text message that indicates that subsequent client messages will be encrypted.
+        \item The client the sends over a hash of all handshake messages to the server.
+        \item The server validates the hash to ensure that it has been talking to the client the entire time.
+        \item At this point, the server has the pre-master secret, which can be used to derive the symmetric keys used to encrypt the data. The server is going to send a ChangeCipherSpec message saying that for now on everything the server sends back to the client is going to be encrypted and a hash of all exchanged messages so far so that the client can validate.
+        \item Then, the client validates the hash to makes sure the client and the server are in agreement of what all the handshake messages should be.
+        \item Then there is an exchange of encrypted and MAC'ed data.
+        \item HTTP data then is going to get fragmented into blocks, and for every individual block we will add a MAC to it, encrypt teh result, and then add a TLS record header to it. The TLS record header is in plain-text and includes info like the length of the encrypted data, whether the data is a TLS control packet or application-level data. This is what gets put on the network by the sender.
+        \item On the receiver side, it will decrypt the block, verify the blob against the MAC, and then put the regular HTTP block up to the application.
+    \end{enumerate}
+    \item The handshaking stuff is not sent over HTTP - it starts with a TCP connection and the handshake happens over TCP, but then once you have an encrypted connection then you start sending HTTP data.
+    \item As we've discussed, if an attacker can subvert a CA, then the attacker can subvert HTTPS. The reason is that the attacker can issue certificates that bind attacker controlled machines to public keys that the attacker owns. So for example if the attacker issues a certificate is \texttt{Subject: CN = Equifax.com} and then also \texttt{Subject public Key Info} that has a bunch of stuff that is attacker controlled. Then if the attacker can convince somebody to visit the sight using a fishing attack, then if they can convince the user that the site belongs to Equifax, then the user might start entering their info into the website and subsequently have it stolen.
+    \item In 2011, there was a CA called DigiNotar which accidentally issued a fraudulent certificate for google.com and all of its subdomains. People theorized that this was done to launch a man-in-the-middle attack (MITM).
+    \item MITM is where the Attacker inserts a fake mail.google.com server between the user browser and the real mail.google.com, so that if the attacker can convince your browser to connect to an attacker-controlled machine then there will be HTTPS traffic between the user and the attacker's mail.google.com using the fake Google certificate. Then the attacker connects to the real mail.google.com over HTTPS using the real Google certificate.
+    \item State-level actors (Masad, CIA) can have access to all the ISPs. So say if Iran wants to look at the inboxes of the Gmail accounts of their citizens. They control the ISPs and so can redirect the traffic through the government servers, and so if they can corrupt one of the trusted CAs then the game is over.
+    \item \textbf{HTTP Strict Transport Security (HSTS)} - the idea is that an HTTPS web server for site.com supplies an HTTP header that looks like \texttt{Strict Transport Security max-age LARGE\_NUMBER}. This means that for the next LARGE\_NUMBER seconds, if the browser ever sees a request for the HTTP version of the site, then the browser will automatically load the hTTPS version of the site instead. The goal of this is to prevent downgrade attacks, whereby if somebody is trying to direct you to an attacker controlled site and the attacker doesn't own the keys for the site it's faking, then if it can get you to use HTTP then there's no certificate to check. So now if the browser can ever go to the HTTPS version of the site, then it will never go to the HTTP version of the site.
+    \item Chrome uses \textbf{HTTPS-pinning} for Google sites. This means that when Chrome visits a Google page, then the browser will only accept certificates from a whitelisted set of CAs. It turns out the Firefox and Edge do this too for popular sites like Twitter. So if the browser then goes to Twitter and gets a certificate not on the whitelist, it assumes there is an attack and rejects it.
+    \item Chrome pulls a \textbf{certificate revocation list} (CRL) from Google during the automated update process. The paper for today mentions how this idea of certificate revocation is very hard to get right. Firefox now does not support recovation lists, they support different techniques. \item One technique that they use is \textbf{stapling}, where a website is responsible for periodically contacting its certificate authority and getting a signed message saying that the sites certificate is still valid. Then the server can ``staple" (include) the message alongside its certificate. Stapling is used by about 21\% of sites. This mechanism bounds the amount of time in which a bad certificate can be used, because if the message gets too old then the browser can reject it saying that the certificate can be revoked. There are also practical issues with this, like if the authority is offline or if you have a bad connection. Then the browser can make the decision to not show the site or silently log something or show the page anyway. So a lot of these techniques fail because there is a lot of user friction or site-operator friction that needs to be overcome for adoption.
+\end{itemize}
+
+\section{September 28, 2017: Web Security I}
+\begin{itemize}
+    \itemsep0em 
+	\item Web security is the worst (REDONCULOUS). The web used to be very simple, comprising static things only. Now that the client is turing-complete, things have gotten messay. 
+    \item If you look at the ``aggregate" web stack, what do you have to think about?
+    \begin{itemize}
+        \item HTML, CSS, JS are just the most basic things.
+        \item You also have to thinking about JPG, PNG, and how those are rendered by the browser securely.
+        \item Then you have to worry about the implementation of things like WebGL.
+        \item Then you have to worry about things like DOM Storage, IndexedDB (accessing local storage on the client machine). 
+        \item Then WebSockets.
+    \end{itemize}
+    \item A single web page contains multiple parsing contexts. HTML can contain JS, CSS can embed images, etc. A lot of the challenges in web security comes from transitions in parsing contexts. A single page often contains content from multiple \textit{principles} (parties who have provided content to the page). Whenever you have site with content with multiple principles, those principles might not agree on what the best security practices are.
+    \item Say you have some HTML (text, input, buttoms, etc.) that contains an ad gif from ads.com. You might also have jQuery.js from some CDN and Google's analytics.js. And then maybe you have an iframe with some inline javascript and a JPG from the iframe source.
+    \item One question you might ask is: can Google Analytics access the state in the jQuery library? They both live in the same frame but have different origins. Another question is: can the jQuery code access state in the JS code defined in the iframe?
+    \item We deal with this with something called the \textbf{Same Origin Policy}. This is the set of security rules that a browser uses to determine what types of content can do what on a given page. The high-level goal is: two different \textit{websites} can't tamper with each other's state (similar to process isolation).
+    \item An \textbf{origin} is a networking scheme and a hostname and a port. The browser assigns an origin to every resource in a page. Example: http://foo.com:80/index.html.
+    \item The SOP has four rules:
+    \begin{enumerate}
+        \item Each origin is associated with some client-side resources (cookies, DOM storage, JS runtime, visual display area, etc.)
+        \item Each frame gets origin frame's URL.
+        \item Scripts included by a frame execute with authority (origin) of that frame. So if parent frame has GA and jQuery then both those scripts can access what the parent frame is.
+        \item Passive content (e.g. images and CSS) is given zero authority.
+    \end{enumerate}
+    \item In javascript, \texttt{window} variable is a global variable that is an alias for the global namespace. So, \texttt{window.x} is a global variable $x$, \texttt{window.parent} refers to teh global namespace parent frame, and so \texttt{window.parent.x}.
+    \item The child frame can send a message to the parent frame using \texttt{window.parent.postMessage(``hello")}, and then the parent can receive the message by adding an event handler:\\ \texttt{window.addEventListern(``message", function (put) ... );}
+    \item This is the way they are supposed to communicate, but if the child frame and and parent frame are from the same origin then you can just use \texttt{window.parent.x}.
+    \item Look at MDN (Mozille Developer's Network) for project 2. Don't use anything else. You can also trust by Flanagan.
+\end{itemize}
+
+\section{October 3, 2017: Web Security II}
+
+\begin{itemize}
+    \itemsep0em 
+	\item  Cookies are small files associated with an HTTP request that allow a eweb site to maintain client-sde state across different page views. It's implemented as a small key/vlaue store. A cookie has a domain and a path (the domain is a (possibly complete) suffix of the associated rframe's URL). The path is either the path of the frame's URL for "/" -> all fetches for all objects in domain should attach cookie).
+    \item Cookies can be set: (1) by the web server using hTTP respons headers (\texttt{set-cooke} headers). and (2) by JavaScript code using the \texttt{document.cookie} variable.
+    \item JS can access any cookie that matches the code's origin or a suffix of the code's origin.
+    \item But note that the security checks \textit{ignore} protocols and ports. So if The Javascript origin is \texttt{xy.com} and the Cookie url is \texttt{xy.com/index.html} or \texttt{xy.com/foo.html}, then the cookie is accessible. But if The Javascript origin is \texttt{xy.com} and the cookie luRL is \texttt{bar.com/index.html}, then the cookie is not accessible.
+    \item The ``Secure" flag can be set so that the cookie is only ever sent over HTTPS. So if you embed some non-HTTPS content from this same origin, the browser will not send the cookie in the request for that content (for example, inside an \texttt{img src=``http://foo.com/image.jpg">}.
+    \item Many sites use cookies for authentication (e.g. Django puts a session ID in each cookie so that the server-side of the application can determine which user issued a request.
+\end{itemize}
+
 \end{document}
